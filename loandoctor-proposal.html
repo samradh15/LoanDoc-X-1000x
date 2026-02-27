@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1000xDev × LoanDoctor — Product Proposal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #0f1a14;
+      --forest: #1a3a26;
+      --green: #2d6a4f;
+      --leaf: #52b788;
+      --pale: #d8f3dc;
+      --cream: #f7f3eb;
+      --warm: #faf8f4;
+      --rust: #c1440e;
+      --rust-light: #f4a261;
+      --grey: #6b7a72;
+      --border: #d4cfc6;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Instrument Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--warm);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--forest);
+      color: var(--cream);
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(82, 183, 136, 0.12);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(82, 183, 136, 0.08);
+      pointer-events: none;
+    }
+
+    .hero-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--leaf);
+    }
+
+    .nav-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.08em;
+    }
+
+    .hero-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px;
+      max-width: 1100px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--leaf);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+
+    .hero-title .x {
+      color: var(--leaf);
+      font-style: italic;
+    }
+
+    .hero-title .client {
+      color: rgba(255, 255, 255, 0.5);
+      display: block;
+      font-size: clamp(36px, 4.5vw, 64px);
+    }
+
+    .hero-sub {
+      margin-top: 36px;
+      max-width: 560px;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.75;
+      border-left: 2px solid var(--leaf);
+      padding-left: 20px;
+    }
+
+    .hero-footer {
+      padding: 32px 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      gap: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-stat-num {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--cream);
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── LAYOUT ── */
+    .section {
+      padding: 100px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--leaf);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.15;
+      color: var(--forest);
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--grey);
+      max-width: 640px;
+      line-height: 1.8;
+      margin-bottom: 60px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── PROBLEM SECTION ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .problem-col {
+      background: var(--warm);
+      padding: 44px 40px;
+    }
+
+    .problem-col.now {
+      background: #fff8f6;
+    }
+
+    .problem-col.future {
+      background: #f2faf5;
+    }
+
+    .problem-col-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-red {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e05252;
+      display: inline-block;
+    }
+
+    .dot-green {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--leaf);
+      display: inline-block;
+    }
+
+    .problem-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    .problem-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .problem-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .problem-text span {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    /* ── FLOW DIAGRAM ── */
+    .flow-wrapper {
+      background: var(--forest);
+      border-radius: 16px;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(82, 183, 136, 0.08);
+      pointer-events: none;
+    }
+
+    .flow-phase-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flow-phase-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(82, 183, 136, 0.2);
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 22px 20px;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .flow-step.ai-touch {
+      border-color: rgba(82, 183, 136, 0.4);
+      background: rgba(82, 183, 136, 0.08);
+    }
+
+    .flow-step-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 10px;
+    }
+
+    .flow-step-icon {
+      margin-bottom: 12px;
+    }
+
+    .flow-step-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .flow-step-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.5;
+    }
+
+    .ai-badge {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: var(--leaf);
+      color: var(--forest);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .flow-down-arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .flow-down-arrow svg {
+      opacity: 0.35;
+    }
+
+    .flow-phase {
+      margin-bottom: 40px;
+    }
+
+    /* ── VOICE AI ── */
+    .voice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .voice-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      background: #fff;
+      position: relative;
+    }
+
+    .voice-card-step {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .voice-card-icon {
+      margin-bottom: 18px;
+    }
+
+    .voice-card-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      color: var(--forest);
+      margin-bottom: 10px;
+    }
+
+    .voice-card-desc {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.75;
+    }
+
+    .voice-card-example {
+      margin-top: 20px;
+      background: #f5f3ef;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--forest);
+      font-style: italic;
+      border-left: 3px solid var(--leaf);
+      line-height: 1.6;
+    }
+
+    /* ── INTEGRATIONS ── */
+    .integrations-map {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px;
+    }
+
+    .int-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .int-hub {
+      background: var(--forest);
+      color: var(--cream);
+      border-radius: 14px;
+      padding: 28px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .int-hub-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .int-hub-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-family: var(--mono);
+    }
+
+    .int-spokes {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .int-node {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      text-align: center;
+      flex: 1;
+      min-width: 160px;
+      max-width: 200px;
+      position: relative;
+    }
+
+    .int-node.new-tag::after {
+      content: 'NEW';
+      position: absolute;
+      top: -9px;
+      right: 12px;
+      background: var(--rust);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.1em;
+    }
+
+    .int-node-icon {
+      margin-bottom: 10px;
+    }
+
+    .int-node-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .int-node-desc {
+      font-size: 11px;
+      color: var(--grey);
+      line-height: 1.5;
+    }
+
+    .int-connector {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .int-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 80px;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .compare-table th {
+      padding: 16px 24px;
+      text-align: left;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--ink);
+      vertical-align: middle;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .compare-table tr:hover td {
+      background: #faf9f6;
+    }
+
+    .status-existing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #2d8653;
+      background: #edf9f2;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .status-new {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--rust);
+      background: #fff3ee;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .status-enhance {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #9b6a00;
+      background: #fff8e8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* ── PHASES ── */
+    .phases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .phase-card {
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .phase-header {
+      padding: 28px 28px 20px;
+      background: var(--forest);
+      color: var(--cream);
+    }
+
+    .phase-number {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 10px;
+    }
+
+    .phase-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .phase-duration {
+      font-size: 11px;
+      color: var(--leaf);
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+    }
+
+    .phase-body {
+      padding: 24px 28px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+    }
+
+    .phase-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .phase-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--leaf);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .phase-outcome {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--grey);
+    }
+
+    .phase-outcome strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--forest);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+
+    /* ── TECH STACK NOTE ── */
+    .tech-strip {
+      background: #0f1a14;
+      border-radius: 14px;
+      padding: 44px 56px;
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tech-strip-title {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--cream);
+      flex-shrink: 0;
+      min-width: 200px;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .tech-tag {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .tech-tag.highlight {
+      background: rgba(82, 183, 136, 0.15);
+      border-color: rgba(82, 183, 136, 0.3);
+      color: var(--leaf);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255, 255, 255, 0.4);
+      padding: 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-note {
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-body>* {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-body>*:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .hero-body>*:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    .hero-body>*:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+
+      .hero-nav,
+      .hero-body,
+      .hero-footer {
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      .section {
+        padding: 64px 28px;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .voice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phases-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-wrapper {
+        padding: 32px 20px;
+      }
+
+      .flow-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+
+      footer {
+        padding: 32px 28px;
+      }
+
+      .tech-strip {
+        padding: 32px 28px;
+      }
+
+      .integrations-map {
+        padding: 32px 24px;
+      }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+
+    /* ── NAV LINK ── */
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--leaf);
+      text-decoration: none;
+      cursor: pointer;
+      padding: 6px 14px;
+      border: 1px solid rgba(82, 183, 136, 0.3);
+      border-radius: 20px;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .nav-link:hover {
+      background: rgba(82, 183, 136, 0.12);
+      border-color: var(--leaf);
+    }
+
+    .nav-link.active {
+      background: var(--leaf);
+      color: var(--forest);
+      border-color: var(--leaf);
+    }
+
+    /* ── PAGE TOGGLE ── */
+    .page-proposal,
+    .page-devref {
+      transition: opacity 0.2s;
+    }
+
+    .page-devref {
+      display: none;
+    }
+
+    body.show-devref .page-proposal {
+      display: none;
+    }
+
+    body.show-devref .page-devref {
+      display: block;
+    }
+
+    body.show-devref .hero {
+      min-height: auto;
+      grid-template-rows: auto;
+    }
+
+    body.show-devref .hero-body,
+    body.show-devref .hero-footer,
+    body.show-devref .hero::before,
+    body.show-devref .hero::after {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="hero">
+    <nav class="hero-nav">
+      <span class="nav-brand">Product Proposal — Internal + Client</span>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span class="nav-link active" id="nav-proposal" onclick="showPage('proposal')">Proposal</span>
+        <span class="nav-link" id="nav-devref" onclick="showPage('devref')">Developer Page</span>
+      </div>
+      <span class="nav-meta">Confidential · Feb 2025</span>
+    </nav>
+
+    <div class="hero-body">
+      <div class="hero-label">New Build · Government Fintech</div>
+      <h1 class="hero-title">
+        1000xDev <span class="x">&times;</span>
+        <span class="client">LoanDoctor</span>
+      </h1>
+      <p class="hero-sub">
+        An AI-first mobile application and admin platform that takes a loan applicant from first conversation to
+        sanctioned loan — with a built-in CRM, automated pipeline, and a ₹1,999 token payment that turns interest into
+        commitment.
+      </p>
+    </div>
+
+    <div class="hero-footer">
+      <div class="hero-stat">
+        <span class="hero-stat-num">3,500 Cr+</span>
+        <span class="hero-stat-label">Loans Facilitated</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">9,000+</span>
+        <span class="hero-stat-label">Businesses Served</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">6</span>
+        <span class="hero-stat-label">Government Schemes</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">50+</span>
+        <span class="hero-stat-label">Bank Connections</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-proposal">
+
+    <!-- ═══════════════ PROBLEM ═══════════════ -->
+    <section class="section">
+      <div class="section-label">Where Things Stand</div>
+      <h2 class="section-title">The honest problem with how things run today</h2>
+      <p class="section-desc">LoanDoctor works. The numbers prove it. But the current setup is built around people doing
+        repetitive work that software should be doing. That's the gap we're here to close.</p>
+
+      <div class="problem-grid">
+        <div class="problem-col now">
+          <div class="problem-col-label"><span class="dot-red"></span> Current State — Bottlenecks</div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#e05252" stroke-width="1.5" fill="#fff6f6" />
+              <path d="M18 10v8l5 3" stroke="#e05252" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <div class="problem-text">
+              <strong>Everything depends on sales agents</strong>
+              <span>Onboarding a single client takes manual work — calls, form filling, follow-ups. One agent can only
+                handle so many clients. Growth hits a ceiling.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#e05252" stroke-width="1.5" fill="#fff6f6" />
+              <rect x="10" y="12" width="8" height="5" rx="1.5" stroke="#e05252" stroke-width="1.5" />
+              <rect x="18" y="18" width="8" height="5" rx="1.5" stroke="#e05252" stroke-width="1.5"
+                stroke-dasharray="2 1.5" />
+              <line x1="14" y1="17" x2="22" y2="18" stroke="#e05252" stroke-width="1.2" stroke-dasharray="2 1.5" />
+            </svg>
+            <div class="problem-text">
+              <strong>There is no pipeline visibility at all</strong>
+              <span>Forms get filled and submitted, but no one can see where each applicant stands, what stage they are
+                at, or which ones need a follow-up. It all lives in someone's head or a spreadsheet.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#e05252" stroke-width="1.5" fill="#fff6f6" />
+              <path d="M12 22 Q14 14 18 16 Q22 18 24 12" stroke="#e05252" stroke-width="1.5" stroke-linecap="round"
+                fill="none" />
+              <circle cx="12" cy="22" r="1.5" fill="#e05252" />
+              <circle cx="24" cy="12" r="1.5" fill="#e05252" />
+            </svg>
+            <div class="problem-text">
+              <strong>NeoDove calls exist in isolation</strong>
+              <span>Call data from NeoDove and client data are two completely separate places. When an advisor calls
+                someone, they have no history in front of them — every call starts from scratch.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#e05252" stroke-width="1.5" fill="#fff6f6" />
+              <path d="M14 18h8M18 14v8" stroke="#e05252" stroke-width="1.8" stroke-linecap="round"
+                stroke-dasharray="2 1.5" />
+            </svg>
+            <div class="problem-text">
+              <strong>No mobile app for the client</strong>
+              <span>Applicants have no self-serve way to track their loan status, upload documents, or get answers
+                without
+                calling or messaging someone.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="problem-col future">
+          <div class="problem-col-label"><span class="dot-green"></span> Target State — What We're Building</div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#2d6a4f" stroke-width="1.5" fill="#f0faf4" />
+              <path d="M12 18l4 4 8-8" stroke="#2d6a4f" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="problem-text">
+              <strong>Voice AI handles first contact and onboarding</strong>
+              <span>A voice assistant asks the right questions, maps the applicant to the right scheme, and guides them
+                through document upload — no human needed for this part.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#2d6a4f" stroke-width="1.5" fill="#f0faf4" />
+              <path d="M12 18l4 4 8-8" stroke="#2d6a4f" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="problem-text">
+              <strong>A built-in CRM gives full pipeline visibility</strong>
+              <span>Every lead, document, call, and stage is tracked inside the platform we build — no third-party tool,
+                no monthly licensing. The team sees a live dashboard of every active application.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#2d6a4f" stroke-width="1.5" fill="#f0faf4" />
+              <path d="M12 18l4 4 8-8" stroke="#2d6a4f" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="problem-text">
+              <strong>NeoDove call logs connect directly to each client record</strong>
+              <span>When a call is logged in NeoDove, it automatically attaches to that client's profile in the
+                platform.
+                Before any advisor calls someone, they see the full history right there.</span>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="17" stroke="#2d6a4f" stroke-width="1.5" fill="#f0faf4" />
+              <path d="M12 18l4 4 8-8" stroke="#2d6a4f" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="problem-text">
+              <strong>Client-facing mobile app with real-time tracking</strong>
+              <span>Applicants open the app, talk to the AI assistant, upload documents, and track their loan progress
+                at
+                every stage — like tracking a Swiggy order, but for loans.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ FLOW ═══════════════ -->
+    <section class="section">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">The full journey, step by step</h2>
+      <p class="section-desc">From the moment a person opens the app to the day their loan is disbursed — here is every
+        step, who handles it, and where the system does the heavy lifting automatically.</p>
+
+      <div class="flow-wrapper">
+
+        <!-- Phase A -->
+        <div class="flow-phase">
+          <div class="flow-phase-title">Phase A — Pre-Application</div>
+          <div class="flow-row">
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">Voice AI</div>
+              <div class="flow-step-num">01</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="4" y="6" width="14" height="16" rx="2" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M10 2v4M14 2v4" stroke="#52b788" stroke-width="1.5" stroke-linecap="round" />
+                  <circle cx="21" cy="19" r="5" fill="rgba(82,183,136,0.15)" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M19 19l1.5 1.5L23 17" stroke="#52b788" stroke-width="1.3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Lead Capture via Voice AI</div>
+              <div class="flow-step-sub">User opens app. The AI assistant asks simple questions — what kind of business,
+                income, location, category. Answers go straight into the in-house CRM as a new lead record.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">Automated</div>
+              <div class="flow-step-num">02</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="14" r="10" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M9 14l3.5 3.5L19 10" stroke="#52b788" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Scheme Eligibility Test</div>
+              <div class="flow-step-sub">System matches answers against PMEGP, MSME, Mudra, NLM, Stand-Up rules. Shows
+                applicant which scheme fits and why.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">AI-Guided</div>
+              <div class="flow-step-num">03</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="5" y="4" width="18" height="20" rx="2" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M9 10h10M9 14h7M9 18h5" stroke="#52b788" stroke-width="1.3" stroke-linecap="round" />
+                  <circle cx="20" cy="20" r="4" fill="rgba(82,183,136,0.15)" stroke="#52b788" stroke-width="1.3" />
+                  <path d="M18.5 20l1 1L22 18.5" stroke="#52b788" stroke-width="1.1" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Document Scrutiny</div>
+              <div class="flow-step-sub">AI tells user exactly which documents are needed for their scheme. User uploads
+                via app. System checks format, clarity, and completeness.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">04</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M6 22l4-4 4 2 4-6 4 3" stroke="#52b788" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" fill="none" />
+                  <rect x="4" y="6" width="20" height="14" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"
+                    fill="none" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Feasibility Check</div>
+              <div class="flow-step-sub">Project cost, margin money, and loan amount are validated. Loan officer is
+                flagged if anything needs manual review. Most cases pass automatically.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-down-arrow">
+          <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+            <path d="M12 2v24M4 18l8 10 8-10" stroke="#52b788" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <!-- Payment Gate -->
+        <div style="display:flex; justify-content:center; margin-bottom:40px;">
+          <div
+            style="background:rgba(193,68,14,0.12); border:1px solid rgba(193,68,14,0.4); border-radius:12px; padding:24px 40px; display:flex; align-items:center; gap:24px; max-width:600px; width:100%;">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="4" y="10" width="32" height="22" rx="4" stroke="#f4a261" stroke-width="1.8"
+                fill="rgba(244,162,97,0.1)" />
+              <path d="M4 17h32" stroke="#f4a261" stroke-width="1.8" />
+              <rect x="10" y="23" width="8" height="3" rx="1.5" fill="#f4a261" opacity="0.6" />
+              <rect x="22" y="23" width="5" height="3" rx="1.5" fill="#f4a261" opacity="0.4" />
+            </svg>
+            <div>
+              <div
+                style="font-family:var(--mono); font-size:10px; color:#f4a261; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:6px;">
+                Payment Gate — Before Application Proceeds</div>
+              <div style="font-size:14px; font-weight:600; color:#fff; margin-bottom:4px;">Token Payment of ₹1,999</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.45); line-height:1.6;">Once eligibility is confirmed
+                and documents are verified, the applicant pays a one-time processing fee of ₹1,999 via UPI, card, or net
+                banking. Only after this does the application get formally submitted and assigned to the LoanDoctor
+                team.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-down-arrow" style="margin-top:-20px;">
+          <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+            <path d="M12 2v24M4 18l8 10 8-10" stroke="#52b788" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <!-- Phase B -->
+        <div class="flow-phase">
+          <div class="flow-phase-title">Phase B — Digital Application</div>
+          <div class="flow-row">
+            <div class="flow-step">
+              <div class="flow-step-num">05</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="3" y="5" width="22" height="16" rx="2" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                  <path d="M9 25h10M14 21v4" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M8 11h12M8 15h8" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Online Application Form</div>
+              <div class="flow-step-sub">Pre-filled from the onboarding conversation. User confirms and signs.
+                Scheme-specific fields are shown dynamically based on loan type.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">06</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="14" r="9" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                  <path d="M10 14h8M14 10v8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" />
+                  <text x="14" y="15" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.5)"
+                    font-family="serif">₹</text>
+                </svg>
+              </div>
+              <div class="flow-step-title">Loan and Subsidy Details</div>
+              <div class="flow-step-sub">System calculates exact loan amount, applicable subsidy percentage, margin
+                money
+                required, and recommended bank based on location and scheme.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">Automated</div>
+              <div class="flow-step-num">07</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="4" y="6" width="20" height="16" rx="2" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M9 14l3 3 7-7" stroke="#52b788" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <circle cx="22" cy="8" r="4" fill="#c1440e" />
+                  <path d="M20.5 8h3M22 6.5v3" stroke="#fff" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Error-Free Validation</div>
+              <div class="flow-step-sub">Every field and document is cross-checked before submission. Missing or
+                mismatched data is flagged to the user with a clear fix instruction. Nothing gets submitted incomplete.
+              </div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">Automated</div>
+              <div class="flow-step-num">08</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="3" y="10" width="10" height="11" rx="1.5" stroke="#52b788" stroke-width="1.5" />
+                  <rect x="15" y="10" width="10" height="11" rx="1.5" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M5 10V7a3 3 0 016 0v3M17 10V7a3 3 0 016 0v3" stroke="#52b788" stroke-width="1.3"
+                    stroke-linecap="round" />
+                  <circle cx="8" cy="15" r="1.5" fill="#52b788" />
+                  <circle cx="20" cy="15" r="1.5" fill="#52b788" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Submit to Bank and Govt Portal</div>
+              <div class="flow-step-sub">Application is submitted to the relevant bank portal and government scheme
+                portal
+                simultaneously. Confirmation references are saved in the in-house CRM automatically — nothing gets lost.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-down-arrow">
+          <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+            <path d="M12 2v24M4 18l8 10 8-10" stroke="#52b788" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <!-- Phase C -->
+        <div class="flow-phase" style="margin-bottom:0">
+          <div class="flow-phase-title">Phase C — Post-Application</div>
+          <div class="flow-row">
+            <div class="flow-step">
+              <div class="flow-step-num">09</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M6 8h16M6 14h10M6 20h7" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"
+                    stroke-linecap="round" />
+                  <circle cx="22" cy="20" r="4" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" />
+                  <path d="M22 18v2.5l1.5 1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Objection Handling</div>
+              <div class="flow-step-sub">When a bank raises a query, the CRM flags it and assigns it to the loan
+                advisor.
+                NeoDove triggers an automated call task. Client is notified through the app.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">10</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="10" r="5" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                  <path d="M6 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"
+                    stroke-linecap="round" />
+                  <path d="M19 12l1.5 1.5L23 11" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Beneficiary Next Steps</div>
+              <div class="flow-step-sub">Applicant is guided through training requirements and margin money arrangements
+                via in-app checklist. Reminders go out through NeoDove if steps are incomplete.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">Tracked</div>
+              <div class="flow-step-num">11</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <rect x="5" y="5" width="18" height="18" rx="3" stroke="#52b788" stroke-width="1.5" />
+                  <path d="M10 14l3 3 6-6" stroke="#52b788" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Sanction and Subsidy Lock</div>
+              <div class="flow-step-sub">Once sanctioned, the CRM record is updated. Client receives in-app
+                notification.
+                Subsidy details are locked and confirmed in the system for audit trail.</div>
+            </div>
+            <div class="flow-arrow">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M12 6l4 4-4 4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="flow-step ai-touch">
+              <div class="ai-badge">AI Follow-up</div>
+              <div class="flow-step-num">12</div>
+              <div class="flow-step-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M14 4v6M14 18v6M4 14h6M18 14h6" stroke="#52b788" stroke-width="1.5" stroke-linecap="round" />
+                  <circle cx="14" cy="14" r="4" stroke="#52b788" stroke-width="1.5" />
+                </svg>
+              </div>
+              <div class="flow-step-title">Disbursement and Monitoring</div>
+              <div class="flow-step-sub">Post-disbursement, AI voice assistant follows up at 30/60/90-day intervals to
+                check utilisation. Responses are logged in CRM for government reporting.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ VOICE AI ═══════════════ -->
+    <section class="section">
+      <div class="section-label">The Core Differentiator</div>
+      <h2 class="section-title">What Voice AI actually does inside the app</h2>
+      <p class="section-desc">This is not a chatbot with pre-set menus. The voice assistant holds a real conversation,
+        understands context in Hindi and Kannada, and hands off to a human only when it genuinely needs to.</p>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-card-step">Touchpoint 01 — First Open</div>
+          <div class="voice-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="2" y="2" width="36" height="36" rx="10" fill="#f0faf4" />
+              <circle cx="20" cy="20" r="8" stroke="#2d6a4f" stroke-width="1.8" fill="none" />
+              <rect x="16" y="13" width="8" height="14" rx="4" stroke="#2d6a4f" stroke-width="1.5" fill="none" />
+              <path d="M14 22c0 3.3 2.7 6 6 6s6-2.7 6-6" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
+                fill="none" />
+              <line x1="20" y1="28" x2="20" y2="31" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="voice-card-title">Discovery conversation</div>
+          <div class="voice-card-desc">The AI introduces itself and asks the user what they're trying to do. Not a form
+            —
+            an actual exchange. It adapts follow-up questions based on each answer.</div>
+          <div class="voice-card-example">
+            "Namaste, main aapko sahi scheme dhundne mein help karunga. Aap kya kaam karte hain — koi business hai ya
+            naya
+            shuru karna chahte hain?"
+          </div>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-card-step">Touchpoint 02 — Scheme Selection</div>
+          <div class="voice-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="2" y="2" width="36" height="36" rx="10" fill="#f0faf4" />
+              <rect x="9" y="12" width="10" height="16" rx="2" stroke="#2d6a4f" stroke-width="1.5" fill="none" />
+              <rect x="21" y="16" width="10" height="12" rx="2" stroke="#2d6a4f" stroke-width="1.5" fill="none" />
+              <path d="M14 20h-2M27 22h-2M14 24h-2" stroke="#2d6a4f" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="voice-card-title">Plain-language recommendation</div>
+          <div class="voice-card-desc">After gathering details, the AI explains which scheme fits and why — in simple
+            terms. It tells the user what subsidy they qualify for, what the loan limit is, and what they need to bring.
+          </div>
+          <div class="voice-card-example">
+            "Aapke liye PMEGP best hai. Aapko 25% subsidy milegi aur loan 10 lakh tak ho sakta hai. Iske liye sirf
+            Aadhaar, PAN, aur ek project report chahiye."
+          </div>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-card-step">Touchpoint 03 — Document Upload</div>
+          <div class="voice-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="2" y="2" width="36" height="36" rx="10" fill="#f0faf4" />
+              <rect x="11" y="8" width="18" height="24" rx="2" stroke="#2d6a4f" stroke-width="1.5" fill="none" />
+              <path d="M15 16h10M15 20h7M20 24l-3 3 3 3" stroke="#2d6a4f" stroke-width="1.3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="voice-card-title">Guided document collection</div>
+          <div class="voice-card-desc">The AI walks the user through uploading each document one at a time. It checks
+            the
+            image quality and tells them if something is blurry or cut off before moving on.</div>
+          <div class="voice-card-example">
+            "Abhi Aadhaar card upload karein — front aur back dono. Ensure karein ki sab kuch clearly visible ho,
+            corners
+            cut na hon."
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ INTEGRATIONS ═══════════════ -->
+    <section class="section">
+      <div class="section-label">System Integrations</div>
+      <h2 class="section-title">How all the pieces talk to each other</h2>
+      <p class="section-desc">The mobile app sits at the center. The CRM and forms are built in-house — owned fully by
+        LoanDoctor, no third-party lock-in. External tools like NeoDove connect in via webhooks.</p>
+
+      <div class="integrations-map">
+        <div class="int-center">
+
+          <div style="width:100%; text-align:center;">
+            <div class="int-hub" style="display:inline-block;">
+              <div class="int-hub-title">LoanDoctor Mobile App</div>
+              <div class="int-hub-sub">React Native · Voice AI Layer · REST API</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:0; width:100%; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex:1; max-width:200px;">
+              <div style="width:1px; height:40px; background:var(--border);"></div>
+              <div class="int-node">
+                <div class="int-node-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="3" y="3" width="22" height="22" rx="5" stroke="#1a3a26" stroke-width="1.5"
+                      fill="#e8f5e9" />
+                    <rect x="7" y="9" width="14" height="3" rx="1" fill="#2d6a4f" opacity="0.5" />
+                    <rect x="7" y="14" width="9" height="2.5" rx="1" fill="#2d6a4f" opacity="0.35" />
+                    <rect x="7" y="18.5" width="6" height="2.5" rx="1" fill="#2d6a4f" opacity="0.25" />
+                    <circle cx="22" cy="20" r="3.5" fill="#2d6a4f" />
+                    <path d="M21 20l.8.8 1.5-1.5" stroke="#fff" stroke-width="1" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="int-node-name">In-House CRM</div>
+                <div class="int-node-desc">Built in — lead pipeline, stages, advisor workspace</div>
+              </div>
+              <div
+                style="background:#e8f5e9; border:1px solid #c8e6c9; border-radius:6px; padding:8px 12px; font-size:11px; color:#2d6a4f; font-family:var(--mono); text-align:center; max-width:160px;">
+                NEW · Built in-house</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex:1; max-width:200px;">
+              <div style="width:1px; height:40px; background:var(--border);"></div>
+              <div class="int-node">
+                <div class="int-node-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="3" y="3" width="22" height="22" rx="5" stroke="#1a3a26" stroke-width="1.5"
+                      fill="#e8f5e9" />
+                    <rect x="7" y="8" width="14" height="13" rx="1.5" stroke="#1a3a26" stroke-width="1.3" fill="none" />
+                    <path d="M10 12h8M10 15h5" stroke="#1a3a26" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M14 21v-3.5" stroke="#1a3a26" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M11 21h6" stroke="#1a3a26" stroke-width="1.2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="int-node-name">In-House Forms</div>
+                <div class="int-node-desc">Dynamic, scheme-specific — pre-filled from AI flow</div>
+              </div>
+              <div
+                style="background:#e8f5e9; border:1px solid #c8e6c9; border-radius:6px; padding:8px 12px; font-size:11px; color:#2d6a4f; font-family:var(--mono); text-align:center; max-width:160px;">
+                NEW · Built in-house</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex:1; max-width:200px;">
+              <div style="width:1px; height:40px; background:var(--border);"></div>
+              <div class="int-node">
+                <div class="int-node-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="3" y="3" width="22" height="22" rx="5" stroke="#1a3a26" stroke-width="1.5"
+                      fill="#e8f5e9" />
+                    <path d="M10 18c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#1a3a26" stroke-width="1.3"
+                      stroke-linecap="round" fill="none" />
+                    <circle cx="14" cy="11" r="3" stroke="#1a3a26" stroke-width="1.3" fill="none" />
+                  </svg>
+                </div>
+                <div class="int-node-name">NeoDove</div>
+                <div class="int-node-desc">Call logs auto-attach to CRM records</div>
+              </div>
+              <div
+                style="background:#e8f5e9; border:1px solid #c8e6c9; border-radius:6px; padding:8px 12px; font-size:11px; color:#2d6a4f; font-family:var(--mono); text-align:center; max-width:160px;">
+                NEW · CRM-linked</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex:1; max-width:200px;">
+              <div style="width:1px; height:40px; background:var(--border);"></div>
+              <div class="int-node">
+                <div class="int-node-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="3" y="3" width="22" height="22" rx="5" stroke="#1a3a26" stroke-width="1.5"
+                      fill="#e8f5e9" />
+                    <circle cx="14" cy="14" r="5" stroke="#1a3a26" stroke-width="1.3" fill="none" />
+                    <path d="M11 14l2 2 4-4" stroke="#1a3a26" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="int-node-name">Voice AI Engine</div>
+                <div class="int-node-desc">Sarvam AI / ElevenLabs · Hindi + Kannada</div>
+              </div>
+              <div
+                style="background:#e8f5e9; border:1px solid #c8e6c9; border-radius:6px; padding:8px 12px; font-size:11px; color:#2d6a4f; font-family:var(--mono); text-align:center; max-width:160px;">
+                NEW · Core feature</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex:1; max-width:200px;">
+              <div style="width:1px; height:40px; background:var(--border);"></div>
+              <div class="int-node">
+                <div class="int-node-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="3" y="3" width="22" height="22" rx="5" stroke="#1a3a26" stroke-width="1.5"
+                      fill="#e8f5e9" />
+                    <rect x="8" y="10" width="5" height="8" rx="1" stroke="#1a3a26" stroke-width="1.3" fill="none" />
+                    <rect x="15" y="13" width="5" height="5" rx="1" stroke="#1a3a26" stroke-width="1.3" fill="none" />
+                  </svg>
+                </div>
+                <div class="int-node-name">Bank and Govt Portals</div>
+                <div class="int-node-desc">Direct API/form submission to PSB portals</div>
+              </div>
+              <div
+                style="background:#fff8e8; border:1px solid #ffe0b2; border-radius:6px; padding:8px 12px; font-size:11px; color:#9b6a00; font-family:var(--mono); text-align:center; max-width:160px;">
+                EXISTING · Automated</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ COMPARISON TABLE ═══════════════ -->
+    <section class="section">
+      <div class="section-label">Scope of Work</div>
+      <h2 class="section-title">Everything we are building, clearly listed</h2>
+      <p class="section-desc">No ambiguity. Each item is either something new we are building from scratch, something
+        you
+        already use that we are improving, or something existing that we are connecting up properly.</p>
+
+      <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff;">
+        <table class="compare-table">
+          <thead>
+            <tr style="background: #f9f8f4;">
+              <th style="width:30%;">Component</th>
+              <th style="width:20%;">Status</th>
+              <th>What it does in the new system</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mobile App (iOS + Android)</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Central client-facing product. Houses the Voice AI assistant, document upload, loan tracker, and
+                notification centre.</td>
+            </tr>
+            <tr>
+              <td><strong>Voice AI Assistant</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Handles lead capture, scheme selection guidance, and document collection conversations in Hindi and
+                Kannada. Replaces the sales agent for first-touch onboarding.</td>
+            </tr>
+            <tr>
+              <td><strong>In-House CRM Dashboard</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Built inside the platform — not a third-party tool. Loan advisors see every lead, their current stage,
+                document status, and call history in one place. No Zoho dependency, no licensing cost, fully tailored to
+                how LoanDoctor actually works.</td>
+            </tr>
+            <tr>
+              <td><strong>In-House Application Forms</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Dynamic forms built into the app and the advisor dashboard. Each scheme (PMEGP, MSME, Mudra, etc.) has
+                its own field set. Data from the Voice AI onboarding pre-fills everything — the applicant rarely types
+                from scratch.</td>
+            </tr>
+            <tr>
+              <td><strong>Token Payment Gateway (₹1,999)</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>After eligibility and document checks pass, the applicant pays ₹1,999 via UPI, card, or net banking
+                before their application is formally forwarded. Payment confirmation auto-updates the application stage
+                in
+                the in-house CRM and triggers the team assignment.</td>
+            </tr>
+            <tr>
+              <td><strong>NeoDove</strong></td>
+              <td><span class="status-enhance">Existing + Enhanced</span></td>
+              <td>Call logs from NeoDove now automatically sync to the matching client record inside the in-house CRM
+                via
+                webhook. Advisors see the full call history before they dial. No manual note-taking, no switching tabs.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Document Validation Engine</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Checks uploaded documents for image quality, document type correctness, and field completeness before
+                the application moves forward.</td>
+            </tr>
+            <tr>
+              <td><strong>Scheme Eligibility Engine</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>A smart matching system built into the platform. It takes the applicant's details — age, category,
+                income, location, type of business — and tells them exactly which government scheme fits them best.
+                LoanDoctor's ops team can update the rules as schemes change.</td>
+            </tr>
+            <tr>
+              <td><strong>Loan Status Tracker</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Live view inside the app showing exactly where the application is at any given moment — submitted,
+                under
+                review, sanctioned, disbursed. Pulls directly from the in-house CRM pipeline stages.</td>
+            </tr>
+            <tr>
+              <td><strong>Bank and Govt Portal Submission</strong></td>
+              <td><span class="status-enhance">Existing + Automated</span></td>
+              <td>Right now an agent does this manually for every application. We will automate it directly through the
+                bank's portal API wherever they allow it. Where they don't, the advisor gets a structured task in the
+                platform to complete it in one step instead of navigating portals from scratch each time.</td>
+            </tr>
+            <tr>
+              <td><strong>Post-Disbursement AI Follow-up</strong></td>
+              <td><span class="status-new">New Build</span></td>
+              <td>Voice AI calls the applicant at 30, 60, and 90 days after disbursement to check how the loan is being
+                used. Responses are logged in the in-house CRM automatically — useful for government compliance
+                reporting.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ PHASES ═══════════════ -->
+    <section class="section">
+      <div class="section-label">Delivery Plan</div>
+      <h2 class="section-title">Three phases, clear milestones, no ambiguity</h2>
+      <p class="section-desc">Each phase delivers something usable and testable. Nothing waits until the end to be seen.
+      </p>
+
+      <div class="phases-grid">
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-number">Phase 01</div>
+            <div class="phase-title">Core App and AI Foundation</div>
+            <div class="phase-duration">Weeks 1 — 6</div>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item">Mobile app shell with onboarding screens (React Native)</div>
+            <div class="phase-item">Voice AI integration — Hindi and Kannada conversation flows for lead capture</div>
+            <div class="phase-item">Scheme eligibility engine — rules for all 6 government schemes</div>
+            <div class="phase-item">Document upload with basic quality validation</div>
+            <div class="phase-item">In-house application forms — scheme-specific fields, pre-filled from the onboarding
+              conversation</div>
+            <div class="phase-outcome">
+              <strong>End of Phase 01, you can demo:</strong>
+              A user opens the app, talks to the AI in Hindi, gets a scheme recommendation, and uploads documents. Full
+              onboarding without a sales agent.
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-number">Phase 02</div>
+            <div class="phase-title">In-House CRM, NeoDove and Pipeline</div>
+            <div class="phase-duration">Weeks 7 — 12</div>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item">In-house CRM built — lead stages, pipeline view, full advisor workspace, all field
+              data mapped from app</div>
+            <div class="phase-item">NeoDove webhook integration — every call log auto-attaches to the right client
+              record
+              in the CRM</div>
+            <div class="phase-item">In-app loan status tracker connected to CRM pipeline stages — client sees live
+              updates
+            </div>
+            <div class="phase-item">Document validation engine — advanced checks, clear rejection messages with fix
+              instructions</div>
+            <div class="phase-item">Error-free validation runs before any application is submitted — nothing incomplete
+              goes through</div>
+            <div class="phase-outcome">
+              <strong>End of Phase 02, you can demo:</strong>
+              A full loan application goes through, lands in the in-house CRM, advisor gets a call task in NeoDove, and
+              the client sees status updates live in the app.
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-number">Phase 03</div>
+            <div class="phase-title">Automation, Analytics and Scale</div>
+            <div class="phase-duration">Weeks 13 — 18</div>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item">Automated bank and govt portal submission (API-based where available)</div>
+            <div class="phase-item">Post-disbursement AI voice follow-up at 30/60/90-day intervals</div>
+            <div class="phase-item">Admin dashboard — pipeline health, conversion rates, objection trends</div>
+            <div class="phase-item">Push notifications for every status change, document request, or bank query</div>
+            <div class="phase-item">Final QA, performance testing, and App Store / Play Store submission</div>
+            <div class="phase-outcome">
+              <strong>End of Phase 03 — ready to launch:</strong>
+              The full system is live. A person can come in through the app, complete the entire loan process without
+              speaking to a sales agent, and the LoanDoctor team has complete visibility over every single application
+              in
+              real time.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+
+    <!-- ═══════════════ TECH STACK ═══════════════ -->
+    <section class="section">
+      <div class="tech-strip">
+        <div class="tech-strip-title">Suggested Technology Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag highlight">React Native</span>
+          <span class="tech-tag highlight">Sarvam AI / ElevenLabs</span>
+          <span class="tech-tag highlight">In-House CRM (React + Node)</span>
+          <span class="tech-tag highlight">In-House Dynamic Forms</span>
+          <span class="tech-tag highlight">NeoDove Webhooks</span>
+          <span class="tech-tag">Node.js Backend</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">AWS / GCP</span>
+          <span class="tech-tag">Firebase Push</span>
+          <span class="tech-tag">REST + Webhooks</span>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end page-proposal -->
+
+  <div class="page-devref">
+    <iframe id="devref-frame" src="loandoctor-dev-reference.html"
+      style="width:100%;border:none;min-height:12000px;"></iframe>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <div class="footer-brand">1000xDev — Product and Engineering</div>
+    <div class="footer-note">Internal + Client Proposal · LoanDoctor · Honeyland Fintech Pvt Ltd</div>
+  </footer>
+
+  <script>
+    function showPage(page) {
+      var body = document.body;
+      var navProposal = document.getElementById('nav-proposal');
+      var navDevref = document.getElementById('nav-devref');
+      if (page === 'devref') {
+        body.classList.add('show-devref');
+        navDevref.classList.add('active');
+        navProposal.classList.remove('active');
+      } else {
+        body.classList.remove('show-devref');
+        navProposal.classList.add('active');
+        navDevref.classList.remove('active');
+      }
+      window.scrollTo(0, 0);
+    }
+  </script>
+
+</body>
+
+</html>
