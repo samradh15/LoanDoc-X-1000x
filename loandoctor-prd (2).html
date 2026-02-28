@@ -1,949 +1,1813 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LoanDoctor — Product Requirement Document</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --ink: #0f1a14;
-  --forest: #1a3a26;
-  --green: #2d6a4f;
-  --leaf: #52b788;
-  --cream: #f7f3eb;
-  --warm: #faf8f4;
-  --rust: #c1440e;
-  --amber: #d97706;
-  --grey: #6b7a72;
-  --border: #ddd9d0;
-  --serif: 'DM Serif Display', Georgia, serif;
-  --sans: 'Instrument Sans', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-html { scroll-behavior: smooth; }
-body { background: var(--warm); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoanDoctor — Product Requirement Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ─── NAV ─── */
-.nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--ink); height: 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 56px; border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.nav-brand { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: .1em; }
-.nav-tabs { display: flex; height: 100%; }
-.nav-tab {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.3); text-decoration: none;
-  padding: 0 18px; display: flex; align-items: center;
-  border-bottom: 2px solid transparent; transition: color .15s;
-}
-.nav-tab:hover { color: rgba(255,255,255,0.6); }
-.nav-tab.on { color: var(--leaf); border-bottom-color: var(--leaf); }
-.nav-right { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.18); letter-spacing: .1em; }
+    :root {
+      --ink: #0f1a14;
+      --forest: #1a3a26;
+      --green: #2d6a4f;
+      --leaf: #52b788;
+      --cream: #f7f3eb;
+      --warm: #faf8f4;
+      --rust: #c1440e;
+      --amber: #d97706;
+      --grey: #6b7a72;
+      --border: #ddd9d0;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Instrument Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
 
-/* ─── HERO ─── */
-.hero {
-  background: var(--forest); min-height: 100vh;
-  display: grid; grid-template-rows: auto 1fr auto;
-  position: relative; overflow: hidden;
-}
-.hero::after {
-  content: ''; position: absolute; right: -100px; top: -100px;
-  width: 540px; height: 540px; border-radius: 50%;
-  border: 1px solid rgba(82,183,136,0.09); pointer-events: none;
-}
-.hero-top {
-  padding: 36px 56px; border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;
-}
-.hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--leaf); }
-.hero-client { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: .08em; }
-.hero-body { padding: 80px 56px 64px; position: relative; z-index: 1; }
-.hero-eyebrow {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--leaf); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
-}
-.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--leaf); }
-h1 { font-family: var(--serif); font-size: clamp(48px, 7vw, 88px); line-height: 1.0; color: var(--cream); margin-bottom: 10px; }
-h1 em { color: var(--leaf); font-style: italic; }
-h1 .sub { display: block; font-size: clamp(28px, 4vw, 52px); color: rgba(255,255,255,0.38); margin-top: 8px; }
-.hero-p { margin-top: 36px; max-width: 500px; font-size: 16px; color: rgba(255,255,255,0.48); line-height: 1.8; border-left: 2px solid rgba(82,183,136,0.3); padding-left: 18px; }
-.hero-stats { padding: 28px 56px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; gap: 52px; position: relative; z-index: 1; flex-wrap: wrap; }
-.stat-n { font-family: var(--serif); font-size: 24px; color: var(--cream); display: block; }
-.stat-l { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-top: 3px; display: block; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* ─── SHARED LIGHT ─── */
-.wrap { max-width: 1060px; margin: 0 auto; padding: 80px 56px; }
-.sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--leaf); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-.sec-label::before { content: ''; width: 18px; height: 1px; background: var(--leaf); }
-h2 { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 44px); color: var(--forest); line-height: 1.15; margin-bottom: 14px; }
-.sec-desc { font-size: 15px; color: var(--grey); max-width: 580px; line-height: 1.8; margin-bottom: 48px; }
-.rule { height: 1px; background: var(--border); max-width: 1060px; margin: 0 auto; }
+    body {
+      background: var(--warm);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ─── TODAY vs AFTER ─── */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.col { padding: 36px 32px; }
-.col-now { background: #fff9f7; }
-.col-new { background: #f3faf5; }
-.col-head { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 24px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.dot-r { background: #e05252; }
-.dot-g { background: var(--leaf); }
-.ci { display: flex; gap: 12px; margin-bottom: 20px; align-items: flex-start; }
-.ci-icon { width: 30px; height: 30px; flex-shrink: 0; margin-top: 3px; }
-.ci strong { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.ci p { font-size: 13px; color: var(--grey); line-height: 1.6; }
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 56px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
 
-/* ─── SCOPE ─── */
-.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.sc { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
-.sc-tag { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; padding: 2px 8px; border-radius: 10px; margin-bottom: 10px; }
-.tag-n { background: #fff3ee; color: var(--rust); }
-.tag-e { background: #fffbf0; color: var(--amber); }
-.sc h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
-.sc p { font-size: 13px; color: var(--grey); line-height: 1.65; }
-.sc ul { margin-top: 8px; list-style: none; }
-.sc ul li { font-size: 12px; color: var(--grey); padding: 3px 0; border-top: 1px solid var(--border); padding-left: 12px; position: relative; line-height: 1.5; }
-.sc ul li::before { content: '—'; position: absolute; left: 0; color: var(--leaf); font-size: 10px; top: 5px; }
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: .1em;
+    }
 
-/* ─── TIMELINE ─── */
-.tl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.tl-col { background: var(--forest); padding: 28px 26px; }
-.tl-col:nth-child(2) { background: #1f3e2b; }
-.tl-wk { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
-.tl-title { font-family: var(--serif); font-size: 20px; color: var(--cream); margin-bottom: 6px; line-height: 1.2; }
-.tl-sub { font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 16px; font-style: italic; }
-.tl-li { font-size: 12px; color: rgba(255,255,255,0.48); margin-bottom: 7px; padding-left: 14px; position: relative; line-height: 1.5; }
-.tl-li::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--leaf); }
-.tl-out { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: var(--leaf); line-height: 1.6; font-style: italic; }
+    .nav-tabs {
+      display: flex;
+      height: 100%;
+    }
 
-/* ─── DEV DARK WRAPPER ─── */
-.dev-wrap { background: var(--ink); }
-.dev-inner { max-width: 1060px; margin: 0 auto; padding: 80px 56px; }
-.dev-intro { margin-bottom: 60px; }
-.dh2 { font-family: var(--serif); font-size: clamp(26px, 3vw, 40px); color: var(--cream); margin-bottom: 14px; }
-.dd { font-size: 15px; color: rgba(255,255,255,0.42); max-width: 560px; line-height: 1.8; border-left: 2px solid rgba(82,183,136,0.25); padding-left: 18px; }
+    .nav-tab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color .15s;
+    }
 
-/* ─── FLOW BLOCKS ─── */
-.fb { margin-bottom: 60px; }
-.fb-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--leaf); margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
-}
-.fb-label::after { content: ''; flex: 1; height: 1px; background: rgba(82,183,136,0.12); }
-.fb-title { font-family: var(--serif); font-size: 22px; color: var(--cream); margin-bottom: 20px; line-height: 1.2; }
+    .nav-tab:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
 
-/* nodes */
-.flow-row { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
-.node {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px; padding: 13px 15px; min-width: 145px; flex-shrink: 0; max-width: 220px;
-}
-.node.hi { background: rgba(82,183,136,0.08); border-color: rgba(82,183,136,0.35); }
-.node.pay { background: rgba(244,162,97,0.07); border-color: rgba(244,162,97,0.4); }
-.node.warn { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.25); }
-.node.amber { background: rgba(217,119,6,0.08); border-color: rgba(217,119,6,0.3); }
-.nbadge {
-  display: inline-block; font-family: var(--mono); font-size: 8px; letter-spacing: .08em;
-  padding: 1px 7px; border-radius: 10px; margin-bottom: 7px; text-transform: uppercase;
-}
-.b-ai { background: rgba(82,183,136,0.18); color: var(--leaf); }
-.b-pay { background: rgba(244,162,97,0.2); color: #f4a261; }
-.b-nd { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); }
-.b-sales { background: rgba(217,119,6,0.2); color: #fbbf24; }
-.node h5 { font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 3px; line-height: 1.3; }
-.node p { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.45; }
+    .nav-tab.on {
+      color: var(--leaf);
+      border-bottom-color: var(--leaf);
+    }
 
-/* arrows */
-.arr { display: flex; align-items: center; padding: 0 4px; flex-shrink: 0; align-self: center; }
-.down { display: flex; padding: 4px 0 4px 64px; }
+    .nav-right {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.18);
+      letter-spacing: .1em;
+    }
 
-/* branches */
-.branch-row { display: flex; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-.branch {
-  flex: 1; min-width: 180px;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px; padding: 14px 15px;
-}
-.branch.yes { border-color: rgba(82,183,136,0.22); }
-.branch.no { border-color: rgba(239,68,68,0.22); }
-.branch.sale { border-color: rgba(217,119,6,0.25); background: rgba(217,119,6,0.05); }
-.branch h5 { font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-.branch p { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.5; }
-.branch ul { list-style: none; margin-top: 6px; }
-.branch ul li { font-size: 10px; color: rgba(255,255,255,0.3); padding: 2px 0 2px 10px; position: relative; line-height: 1.45; }
-.branch ul li::before { content: '↳'; position: absolute; left: 0; color: rgba(82,183,136,0.4); font-size: 9px; }
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--forest);
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* note */
-.note { background: rgba(82,183,136,0.06); border: 1px solid rgba(82,183,136,0.15); border-radius: 8px; padding: 13px 16px; font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.65; margin-top: 8px; }
-.note strong { color: rgba(255,255,255,0.6); }
-.note.amber-note { background: rgba(217,119,6,0.06); border-color: rgba(217,119,6,0.2); }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -100px;
+      top: -100px;
+      width: 540px;
+      height: 540px;
+      border-radius: 50%;
+      border: 1px solid rgba(82, 183, 136, 0.09);
+      pointer-events: none;
+    }
 
-.drule { height: 1px; background: rgba(255,255,255,0.06); margin: 52px 0; }
+    .hero-top {
+      padding: 36px 56px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
 
-/* pipeline */
-.pipe { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-.pipe-head { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: var(--mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
-.pipe-cols { display: flex; overflow-x: auto; }
-.pc { flex: 1; min-width: 120px; padding: 14px 16px; border-right: 1px solid rgba(255,255,255,0.06); }
-.pc:last-child { border-right: none; }
-.pc-n { font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.2); margin-bottom: 5px; }
-.pc-name { font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.3; }
-.pc-team { font-size: 10px; color: rgba(255,255,255,0.3); font-family: var(--mono); line-height: 1.4; }
-.pc.hold { background: rgba(239,68,68,0.05); }
-.pc.hold .pc-name { color: #fca5a5; }
-.pc.hold .pc-team { color: rgba(252,165,165,0.45); }
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--leaf);
+    }
 
-/* roles */
-.roles { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-.rc { flex: 1; min-width: 220px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 8px; padding: 20px; }
-.rc h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 5px; }
-.rc .rdesc { font-size: 12px; color: rgba(255,255,255,0.38); margin-bottom: 12px; line-height: 1.55; }
-.rc ul { list-style: none; }
-.rc ul li { font-size: 11px; color: rgba(255,255,255,0.3); padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.04); line-height: 1.5; }
-.rc ul li::before { content: '↳ '; color: rgba(82,183,136,0.5); font-size: 10px; }
+    .hero-client {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: .08em;
+    }
 
-/* sub-heading inside dark blocks */
-.sub-h { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin: 20px 0 12px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 18px; }
+    .hero-body {
+      padding: 80px 56px 64px;
+      position: relative;
+      z-index: 1;
+    }
 
-/* FOOTER */
-footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.05); padding: 32px 56px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.fl { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.35); }
-.fr-t { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.15); }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-@media (max-width: 820px) {
-  .nav, .hero-top, .hero-body, .hero-stats, .wrap, .dev-inner { padding-left: 22px; padding-right: 22px; }
-  .two-col, .scope-grid, .tl-grid { grid-template-columns: 1fr; }
-  .pipe-cols { flex-direction: column; }
-  footer { padding: 24px 22px; }
-}
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-</style>
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--leaf);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+
+    h1 em {
+      color: var(--leaf);
+      font-style: italic;
+    }
+
+    h1 .sub {
+      display: block;
+      font-size: clamp(28px, 4vw, 52px);
+      color: rgba(255, 255, 255, 0.38);
+      margin-top: 8px;
+    }
+
+    .hero-p {
+      margin-top: 36px;
+      max-width: 500px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.48);
+      line-height: 1.8;
+      border-left: 2px solid rgba(82, 183, 136, 0.3);
+      padding-left: 18px;
+    }
+
+    .hero-stats {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      gap: 52px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .stat-n {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--cream);
+      display: block;
+    }
+
+    .stat-l {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.28);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ─── SHARED LIGHT ─── */
+    .wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 80px 56px;
+    }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sec-label::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: var(--leaf);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--forest);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .sec-desc {
+      font-size: 15px;
+      color: var(--grey);
+      max-width: 580px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--border);
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    /* ─── TODAY vs AFTER ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .col {
+      padding: 36px 32px;
+    }
+
+    .col-now {
+      background: #fff9f7;
+    }
+
+    .col-new {
+      background: #f3faf5;
+    }
+
+    .col-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-r {
+      background: #e05252;
+    }
+
+    .dot-g {
+      background: var(--leaf);
+    }
+
+    .ci {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .ci-icon {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .ci strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .ci p {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    /* ─── SCOPE ─── */
+    .scope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .sc {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .sc-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .1em;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tag-n {
+      background: #fff3ee;
+      color: var(--rust);
+    }
+
+    .tag-e {
+      background: #fffbf0;
+      color: var(--amber);
+    }
+
+    .sc h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .sc p {
+      font-size: 13px;
+      color: var(--grey);
+      line-height: 1.65;
+    }
+
+    .sc ul {
+      margin-top: 8px;
+      list-style: none;
+    }
+
+    .sc ul li {
+      font-size: 12px;
+      color: var(--grey);
+      padding: 3px 0;
+      border-top: 1px solid var(--border);
+      padding-left: 12px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .sc ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--leaf);
+      font-size: 10px;
+      top: 5px;
+    }
+
+    /* ─── TIMELINE ─── */
+    .tl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .tl-col {
+      background: var(--forest);
+      padding: 28px 26px;
+    }
+
+    .tl-col:nth-child(2) {
+      background: #1f3e2b;
+    }
+
+    .tl-wk {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 8px;
+    }
+
+    .tl-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      color: var(--cream);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .tl-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .tl-li {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.48);
+      margin-bottom: 7px;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .tl-li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--leaf);
+    }
+
+    .tl-out {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11px;
+      color: var(--leaf);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ─── DEV DARK WRAPPER ─── */
+    .dev-wrap {
+      background: var(--ink);
+    }
+
+    .dev-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 80px 56px;
+    }
+
+    .dev-intro {
+      margin-bottom: 60px;
+    }
+
+    .dh2 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 40px);
+      color: var(--cream);
+      margin-bottom: 14px;
+    }
+
+    .dd {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.42);
+      max-width: 560px;
+      line-height: 1.8;
+      border-left: 2px solid rgba(82, 183, 136, 0.25);
+      padding-left: 18px;
+    }
+
+    /* ─── FLOW BLOCKS ─── */
+    .fb {
+      margin-bottom: 60px;
+    }
+
+    .fb-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fb-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(82, 183, 136, 0.12);
+    }
+
+    .fb-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--cream);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    /* nodes */
+    .flow-row {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .node {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 13px 15px;
+      min-width: 145px;
+      flex-shrink: 0;
+      max-width: 220px;
+    }
+
+    .node.hi {
+      background: rgba(82, 183, 136, 0.08);
+      border-color: rgba(82, 183, 136, 0.35);
+    }
+
+    .node.pay {
+      background: rgba(244, 162, 97, 0.07);
+      border-color: rgba(244, 162, 97, 0.4);
+    }
+
+    .node.warn {
+      background: rgba(239, 68, 68, 0.06);
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+
+    .node.amber {
+      background: rgba(217, 119, 6, 0.08);
+      border-color: rgba(217, 119, 6, 0.3);
+    }
+
+    .nbadge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .08em;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .b-ai {
+      background: rgba(82, 183, 136, 0.18);
+      color: var(--leaf);
+    }
+
+    .b-pay {
+      background: rgba(244, 162, 97, 0.2);
+      color: #f4a261;
+    }
+
+    .b-nd {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .b-sales {
+      background: rgba(217, 119, 6, 0.2);
+      color: #fbbf24;
+    }
+
+    .node h5 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .node p {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.38);
+      line-height: 1.45;
+    }
+
+    /* arrows */
+    .arr {
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .down {
+      display: flex;
+      padding: 4px 0 4px 64px;
+    }
+
+    /* branches */
+    .branch-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .branch {
+      flex: 1;
+      min-width: 180px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 15px;
+    }
+
+    .branch.yes {
+      border-color: rgba(82, 183, 136, 0.22);
+    }
+
+    .branch.no {
+      border-color: rgba(239, 68, 68, 0.22);
+    }
+
+    .branch.sale {
+      border-color: rgba(217, 119, 6, 0.25);
+      background: rgba(217, 119, 6, 0.05);
+    }
+
+    .branch h5 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .branch p {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 1.5;
+    }
+
+    .branch ul {
+      list-style: none;
+      margin-top: 6px;
+    }
+
+    .branch ul li {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 2px 0 2px 10px;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .branch ul li::before {
+      content: '↳';
+      position: absolute;
+      left: 0;
+      color: rgba(82, 183, 136, 0.4);
+      font-size: 9px;
+    }
+
+    /* note */
+    .note {
+      background: rgba(82, 183, 136, 0.06);
+      border: 1px solid rgba(82, 183, 136, 0.15);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.42);
+      line-height: 1.65;
+      margin-top: 8px;
+    }
+
+    .note strong {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .note.amber-note {
+      background: rgba(217, 119, 6, 0.06);
+      border-color: rgba(217, 119, 6, 0.2);
+    }
+
+    .drule {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 52px 0;
+    }
+
+    /* pipeline */
+    .pipe {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .pipe-head {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .pipe-cols {
+      display: flex;
+      overflow-x: auto;
+    }
+
+    .pc {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px 16px;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pc:last-child {
+      border-right: none;
+    }
+
+    .pc-n {
+      font-family: var(--mono);
+      font-size: 8px;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 5px;
+    }
+
+    .pc-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .pc-team {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+      font-family: var(--mono);
+      line-height: 1.4;
+    }
+
+    .pc.hold {
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .pc.hold .pc-name {
+      color: #fca5a5;
+    }
+
+    .pc.hold .pc-team {
+      color: rgba(252, 165, 165, 0.45);
+    }
+
+    /* roles */
+    .roles {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .rc {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .rc h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .rc .rdesc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.38);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .rc ul {
+      list-style: none;
+    }
+
+    .rc ul li {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 4px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      line-height: 1.5;
+    }
+
+    .rc ul li::before {
+      content: '↳ ';
+      color: rgba(82, 183, 136, 0.5);
+      font-size: 10px;
+    }
+
+    /* sub-heading inside dark blocks */
+    .sub-h {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin: 20px 0 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 18px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 32px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .fl {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .fr-t {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    @media (max-width: 820px) {
+
+      .nav,
+      .hero-top,
+      .hero-body,
+      .hero-stats,
+      .wrap,
+      .dev-inner {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .two-col,
+      .scope-grid,
+      .tl-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pipe-cols {
+        flex-direction: column;
+      }
+
+      footer {
+        padding: 24px 22px;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <span class="nav-brand">1000xDev × LoanDoctor</span>
-  <div class="nav-tabs">
-    <a class="nav-tab on" href="#proposal" id="t-proposal">Proposal</a>
-    <a class="nav-tab" href="#dev" id="t-dev">Developer Flow</a>
-  </div>
-  <span class="nav-right">Confidential · 2025</span>
-</nav>
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-brand">1000xDev × LoanDoctor</span>
+    <div class="nav-tabs">
+      <a class="nav-tab on" href="#proposal" id="t-proposal">Proposal</a>
+      <a class="nav-tab" href="#dev" id="t-dev">Developer Flow</a>
+    </div>
+    <span class="nav-right">Confidential · 2025</span>
+  </nav>
 
 
-<!-- ═══════════════════════════ PROPOSAL ═══════════════════════════ -->
-<div id="proposal">
+  <!-- ═══════════════════════════ PROPOSAL ═══════════════════════════ -->
+  <div id="proposal">
 
-<header class="hero">
-  <div class="hero-top">
-    <span class="hero-label">Product Requirement Document</span>
-    <span class="hero-client">Honeyland Fintech Pvt. Ltd.</span>
-  </div>
-  <div class="hero-body">
-    <div class="hero-eyebrow">Government Fintech · Mobile + Admin Platform</div>
-    <h1>
-      1000xDev <em>×</em>
-      <span class="sub">LoanDoctor</span>
-    </h1>
-    <p class="hero-p">A mobile app and admin portal that handles the first half of the customer journey — so the sales and ops team focuses on closing loans, not collecting information over phone calls.</p>
-  </div>
-  <div class="hero-stats">
-    <div><span class="stat-n">₹3,500 Cr+</span><span class="stat-l">Loans Facilitated</span></div>
-    <div><span class="stat-n">9,000+</span><span class="stat-l">Businesses Served</span></div>
-    <div><span class="stat-n">6</span><span class="stat-l">Govt Schemes</span></div>
-    <div><span class="stat-n">2–3 Weeks</span><span class="stat-l">Timeline</span></div>
-  </div>
-</header>
+    <header class="hero">
+      <div class="hero-top">
+        <span class="hero-label">Product Requirement Document</span>
+        <span class="hero-client">Honeyland Fintech Pvt. Ltd.</span>
+      </div>
+      <div class="hero-body">
+        <div class="hero-eyebrow">Government Fintech · Mobile + Admin Platform</div>
+        <h1>
+          1000xDev <em>×</em>
+          <span class="sub">LoanDoctor</span>
+        </h1>
+        <p class="hero-p">A mobile app and admin portal that handles the first half of the customer journey — so the
+          sales and ops team focuses on closing loans, not collecting information over phone calls.</p>
+      </div>
+      <div class="hero-stats">
+        <div><span class="stat-n">₹3,500 Cr+</span><span class="stat-l">Loans Facilitated</span></div>
+        <div><span class="stat-n">9,000+</span><span class="stat-l">Businesses Served</span></div>
+        <div><span class="stat-n">6</span><span class="stat-l">Govt Schemes</span></div>
+        <div><span class="stat-n">2–3 Weeks</span><span class="stat-l">Timeline</span></div>
+      </div>
+    </header>
 
 
-<!-- TODAY vs AFTER -->
-<div class="wrap">
-  <div class="sec-label">The Problem</div>
-  <h2>What's happening today and what changes</h2>
-  <p class="sec-desc">The business runs well. The issue is that every customer needs a sales agent on the phone before anything can happen. The app handles that first conversation — and feeds warm, paying leads directly to the team.</p>
+    <!-- TODAY vs AFTER -->
+    <div class="wrap">
+      <div class="sec-label">The Problem</div>
+      <h2>What's happening today and what changes</h2>
+      <p class="sec-desc">The business runs well. The issue is that every customer needs a sales agent on the phone
+        before anything can happen. The app handles that first conversation — and feeds warm, paying leads directly to
+        the team.</p>
 
-  <div class="two-col">
-    <div class="col col-now">
-      <div class="col-head"><span class="dot dot-r"></span>Today</div>
+      <div class="two-col">
+        <div class="col col-now">
+          <div class="col-head"><span class="dot dot-r"></span>Today</div>
 
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6"/>
-          <path d="M15 8v7l3.5 2" stroke="#e05252" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div>
-          <strong>One agent, one customer, one call at a time</strong>
-          <p>NeoDove dials the customer. Agent collects business details, recommends a scheme, and sells via QR code — all manually on the phone. No call can happen in parallel without more agents.</p>
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6" />
+              <path d="M15 8v7l3.5 2" stroke="#e05252" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+            <div>
+              <strong>One agent, one customer, one call at a time</strong>
+              <p>NeoDove dials the customer. Agent collects business details, recommends a scheme, and sells via QR code
+                — all manually on the phone. No call can happen in parallel without more agents.</p>
+            </div>
+          </div>
+
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6" />
+              <rect x="8" y="10" width="6" height="4" rx="1.5" stroke="#e05252" stroke-width="1.3" />
+              <rect x="16" y="15" width="6" height="4" rx="1.5" stroke="#e05252" stroke-width="1.3"
+                stroke-dasharray="2 1.5" />
+            </svg>
+            <div>
+              <strong>Zoho Forms and Zoho Projects are not connected</strong>
+              <p>Converted customer → agent fills Zoho form → response lands in Zoho Projects → ops manager manually
+                assigns to a loan supervisor. Four steps, three tools, all manual.</p>
+            </div>
+          </div>
+
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6" />
+              <path d="M9 20 Q11 12 15 14 Q19 16 21 10" stroke="#e05252" stroke-width="1.3" stroke-linecap="round"
+                fill="none" />
+            </svg>
+            <div>
+              <strong>Documents come in over WhatsApp</strong>
+              <p>Loan supervisor chases Aadhaar, PAN, caste certificate, bank passbook over WhatsApp. Stored as raw
+                files in Zoho Projects. No structure, no tracking.</p>
+            </div>
+          </div>
+
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6" />
+              <path d="M10 15h10M15 10v10" stroke="#e05252" stroke-width="1.5" stroke-linecap="round"
+                stroke-dasharray="2 2" />
+            </svg>
+            <div>
+              <strong>Customer has no visibility into their application</strong>
+              <p>No tracking, no updates. They call or WhatsApp to find out what is happening. Every status check is
+                manual work for the team.</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6"/>
-          <rect x="8" y="10" width="6" height="4" rx="1.5" stroke="#e05252" stroke-width="1.3"/>
-          <rect x="16" y="15" width="6" height="4" rx="1.5" stroke="#e05252" stroke-width="1.3" stroke-dasharray="2 1.5"/>
-        </svg>
-        <div>
-          <strong>Zoho Forms and Zoho Projects are not connected</strong>
-          <p>Converted customer → agent fills Zoho form → response lands in Zoho Projects → ops manager manually assigns to a loan supervisor. Four steps, three tools, all manual.</p>
-        </div>
-      </div>
+        <div class="col col-new">
+          <div class="col-head"><span class="dot dot-g"></span>After this build</div>
 
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6"/>
-          <path d="M9 20 Q11 12 15 14 Q19 16 21 10" stroke="#e05252" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-        </svg>
-        <div>
-          <strong>Documents come in over WhatsApp</strong>
-          <p>Loan supervisor chases Aadhaar, PAN, caste certificate, bank passbook over WhatsApp. Stored as raw files in Zoho Projects. No structure, no tracking.</p>
-        </div>
-      </div>
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4" />
+              <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div>
+              <strong>App handles the first conversation via Voice AI</strong>
+              <p>Customer opens the app, the AI asks the right questions in Hindi or Kannada. If they drop off or don't
+                engage, the lead is automatically sent to a sales agent for a follow-up call.</p>
+            </div>
+          </div>
 
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#e05252" stroke-width="1.3" fill="#fff6f6"/>
-          <path d="M10 15h10M15 10v10" stroke="#e05252" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/>
-        </svg>
-        <div>
-          <strong>Customer has no visibility into their application</strong>
-          <p>No tracking, no updates. They call or WhatsApp to find out what is happening. Every status check is manual work for the team.</p>
-        </div>
-      </div>
-    </div>
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4" />
+              <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div>
+              <strong>Payment triggers everything automatically</strong>
+              <p>Customer pays ₹1,999 in the app → case is created in the CRM → assigned to a loan supervisor. No form,
+                no manual step, no delay.</p>
+            </div>
+          </div>
 
-    <div class="col col-new">
-      <div class="col-head"><span class="dot dot-g"></span>After this build</div>
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4" />
+              <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div>
+              <strong>One portal for the whole team</strong>
+              <p>CRM built in-house. Administrator assigns, Managers work their cases. No switching between Zoho tools.
+                NeoDove call logs attach to the case automatically.</p>
+            </div>
+          </div>
 
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4"/>
-          <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <strong>App handles the first conversation via Voice AI</strong>
-          <p>Customer opens the app, the AI asks the right questions in Hindi or Kannada. If they drop off or don't engage, the lead is automatically sent to a sales agent for a follow-up call.</p>
-        </div>
-      </div>
-
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4"/>
-          <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <strong>Payment triggers everything automatically</strong>
-          <p>Customer pays ₹1,999 in the app → case is created in the CRM → assigned to a loan supervisor. No form, no manual step, no delay.</p>
-        </div>
-      </div>
-
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4"/>
-          <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <strong>One portal for the whole team</strong>
-          <p>CRM built in-house. Administrator assigns, Managers work their cases. No switching between Zoho tools. NeoDove call logs attach to the case automatically.</p>
-        </div>
-      </div>
-
-      <div class="ci">
-        <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4"/>
-          <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <strong>Customer tracks their application themselves</strong>
-          <p>Every stage update shows in the app with a push notification. They chat with their loan supervisor in-app and upload documents without calling anyone.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="rule"></div>
-
-<!-- SCOPE -->
-<div class="wrap" style="padding-top: 72px; padding-bottom: 72px;">
-  <div class="sec-label">Scope</div>
-  <h2>What we're building</h2>
-  <p class="sec-desc">Five systems. Nothing else is in scope for this engagement.</p>
-
-  <div class="scope-grid">
-    <div class="sc">
-      <div class="sc-tag tag-n">New</div>
-      <h4>Customer Mobile App</h4>
-      <p>iOS and Android. The customer's entire journey — from first open to application delivered.</p>
-      <ul>
-        <li>OTP login, language selection (Hindi / Kannada / English)</li>
-        <li>Voice AI onboarding — collects business profile through conversation</li>
-        <li>Scheme recommendation based on profile</li>
-        <li>Scheme browsing and content pages</li>
-        <li>Document upload with per-file quality check</li>
-        <li>₹1,999 token payment — UPI, card, net banking, wallets</li>
-        <li>Invoice generation and download (PDF)</li>
-        <li>Live application tracker — stage-by-stage</li>
-        <li>In-app chat with loan supervisor</li>
-        <li>Push notifications on every stage change</li>
-        <li>Support ticket flow</li>
-      </ul>
-    </div>
-
-    <div class="sc">
-      <div class="sc-tag tag-n">New</div>
-      <h4>Sales Engine</h4>
-      <p>For sales agents — managing leads, tracking conversions, and monitoring commissions.</p>
-      <ul>
-        <li>Sales agent portal — view assigned and unassigned leads</li>
-        <li>Lead status tracking — unpaid / partially paid / fully paid</li>
-        <li>Leads from the app that didn't convert or dropped off AI flow</li>
-        <li>Lead notes and engagement history per lead</li>
-        <li>Commission dashboard — current month, pending, historical</li>
-        <li>Commission calculation per scheme (percentage or fixed)</li>
-        <li>Finance team approval flow for commission payouts</li>
-        <li>Sales performance dashboard — active leads, conversion rate, target vs actual</li>
-      </ul>
-    </div>
-
-    <div class="sc">
-      <div class="sc-tag tag-n">New</div>
-      <h4>Operations Backend (CRM + Checklist)</h4>
-      <p>For loan supervisors — working applications from payment to delivery.</p>
-      <ul>
-        <li>Full application pipeline — kanban view across all stages</li>
-        <li>Configurable checklist per loan scheme (steps can be added, changed)</li>
-        <li>Document review — approve or reject each document with a note</li>
-        <li>Chat with customer in-app</li>
-        <li>Upload documents from admin side</li>
-        <li>NeoDove call log attached to each case automatically</li>
-        <li>Activity timeline per application — every action, every change, every call</li>
-        <li>Stage-wise analytics and progress tracking</li>
-      </ul>
-    </div>
-
-    <div class="sc">
-      <div class="sc-tag tag-n">New</div>
-      <h4>Admin Dashboard</h4>
-      <p>For the Administrator — full visibility across sales, ops, and commissions.</p>
-      <ul>
-        <li>All applications across all stages in one view</li>
-        <li>Assign applications to loan supervisors</li>
-        <li>Add/remove users and manage roles (Administrator / Manager)</li>
-        <li>Revenue tracking — payments collected, scheme-wise breakdown</li>
-        <li>Sales team performance — leads, conversions, commission approvals</li>
-        <li>Pipeline health — how many cases at each stage, how long they've been there</li>
-        <li>Payment reconciliation</li>
-      </ul>
-    </div>
-
-    <div class="sc" style="grid-column: 1 / -1;">
-      <div class="sc-tag tag-e">Connecting existing</div>
-      <h4>NeoDove Integration</h4>
-      <p>NeoDove stays as the calling tool for sales agents and loan supervisors. We connect it so every call automatically attaches to the right case in the portal — no manual logging. NeoDove also receives leads that dropped off in the app so agents can follow up. Commission tracking from NeoDove's existing data will feed into the sales dashboard.</p>
-    </div>
-  </div>
-</div>
-
-<div class="rule"></div>
-
-<!-- TIMELINE -->
-<div class="wrap" style="padding-top: 72px; padding-bottom: 88px;">
-  <div class="sec-label">Timeline</div>
-  <h2>2 to 3 weeks</h2>
-  <p class="sec-desc">The current LoanDoctor app at <strong style="color:var(--forest)">app.loandoctor.in</strong> is the starting point. We are not starting from zero — we're replacing and upgrading what's there. Each week adds a working layer on top of that base.</p>
-
-  <div class="tl-grid">
-    <div class="tl-col">
-      <div class="tl-wk">Week 01</div>
-      <div class="tl-title">App + Voice AI</div>
-      <div class="tl-sub">Starting from: current app.loandoctor.in onboarding</div>
-      <div class="tl-li">Replace current onboarding with Voice AI conversation flow</div>
-      <div class="tl-li">Language selection — Hindi, Kannada, English</div>
-      <div class="tl-li">Scheme eligibility matching for all 6 schemes</div>
-      <div class="tl-li">Document upload screen with per-file quality check</div>
-      <div class="tl-li">Scheme browsing and content pages</div>
-      <div class="tl-li">Lead capture — if customer drops off, lead is queued for sales agent</div>
-      <div class="tl-out">Customer can open the app, talk to AI in Hindi or Kannada, get a scheme recommendation, and upload documents. Dropped leads are visible to sales agents.</div>
-    </div>
-    <div class="tl-col">
-      <div class="tl-wk">Week 02</div>
-      <div class="tl-title">Payment + Admin portal</div>
-      <div class="tl-sub">Starting from: existing Zoho Projects stage structure</div>
-      <div class="tl-li">₹1,999 token payment — UPI, card, net banking, wallets</div>
-      <div class="tl-li">Invoice PDF generated and sent on payment</div>
-      <div class="tl-li">Case auto-created in CRM on payment success</div>
-      <div class="tl-li">Application tracker in the customer app</div>
-      <div class="tl-li">Admin portal — pipeline kanban, application detail, document review</div>
-      <div class="tl-li">Administrator and Manager roles — correct access for each</div>
-      <div class="tl-li">Sales agent portal — lead pool, lead status, notes</div>
-      <div class="tl-out">Payment goes through, case lands in the portal, team can move it through stages. Sales agents can see and work dropped leads.</div>
-    </div>
-    <div class="tl-col">
-      <div class="tl-wk">Week 03</div>
-      <div class="tl-title">Integrations + commissions + launch</div>
-      <div class="tl-sub">Starting from: NeoDove webhook setup + existing commission structure</div>
-      <div class="tl-li">NeoDove webhook — call logs auto-attach to cases</div>
-      <div class="tl-li">Push notifications on every stage change</div>
-      <div class="tl-li">WhatsApp notifications for key events (payment, stage change)</div>
-      <div class="tl-li">In-app chat between customer and loan supervisor</div>
-      <div class="tl-li">Commission tracking dashboard for sales agents and finance</div>
-      <div class="tl-li">Commission approval flow for admin</div>
-      <div class="tl-li">QA, bug fixes, App Store + Play Store submission</div>
-      <div class="tl-out">Full system live. Customer handles the first half in the app. Sales agent handles drop-offs. Ops team works from the portal. Commissions tracked automatically.</div>
-    </div>
-  </div>
-</div>
-
-</div><!-- end #proposal -->
-
-
-<!-- ═══════════════════════════ DEV FLOW ═══════════════════════════ -->
-<div class="dev-wrap" id="dev">
-<div class="dev-inner">
-
-  <div class="dev-intro">
-    <div class="sec-label" style="color: var(--leaf);">Developer Flow</div>
-    <h2 class="dh2">What we understood from the client — and how we're building it</h2>
-    <p class="dd">For the dev team. No UI specs, no stack decisions — just flows. Read all five blocks before starting. These flows describe the current client setup, the customer app, the sales agent loop, the admin portal, and the NeoDove connection.</p>
-  </div>
-
-
-  <!-- ── BLOCK 1: CURRENT SETUP ── -->
-  <div class="fb">
-    <div class="fb-label">Block 1</div>
-    <div class="fb-title">How LoanDoctor works today</div>
-
-    <div class="flow-row">
-      <div class="node">
-        <div class="nbadge b-nd">NeoDove</div>
-        <h5>Telecaller dials customer</h5>
-        <p>Sales Agent 1, 2...n calls via NeoDove dialer</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Collects business details over call</h5>
-        <p>Business type, turnover, location, category, extra info</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Recommends a scheme</h5>
-        <p>PMEGP, MSME, Mudra, NLM, Stand-Up India, Education Loan</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Sells via QR code</h5>
-        <p>Customer scans to pay. Status logged in NeoDove CRM — unpaid / partially paid / fully paid</p>
-      </div>
-    </div>
-
-    <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none"><path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-    <div class="branch-row">
-      <div class="branch no">
-        <h5>Not converted → lead stays in NeoDove</h5>
-        <p>Customer didn't pay. Lead stays in NeoDove. Agent follows up manually. No automated next step.</p>
-      </div>
-      <div class="branch yes">
-        <h5>Converted → Zoho form filled by agent</h5>
-        <p>Agent fills a Zoho form. Response goes into Zoho Projects. Ops manager receives it and manually assigns to a loan supervisor.</p>
-      </div>
-    </div>
-
-    <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none"><path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-    <div class="flow-row">
-      <div class="node">
-        <h5>Loan supervisor takes over</h5>
-        <p>Via WhatsApp or call</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Document collection over WhatsApp</h5>
-        <p>Aadhaar, PAN, caste cert, bank passbook, invoice docs — sent over WhatsApp, stored as files in Zoho Projects</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Project report prepared</h5>
-        <p>LoanDoctor creates the DPR. Priced by loan size — ₹3,999 to ₹11,999+. Stored in Zoho Projects.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <h5>Loan applied + docs sent</h5>
-        <p>Documents sent to customer and submitted to bank or govt portal</p>
-      </div>
-    </div>
-
-    <div class="note"><strong>What we're replacing:</strong> NeoDove + WhatsApp + Zoho Forms + Zoho Projects — four disconnected tools with no shared view. The platform we're building is a single system that does all of this.</div>
-  </div>
-
-  <div class="drule"></div>
-
-
-  <!-- ── BLOCK 2: CUSTOMER APP ── -->
-  <div class="fb">
-    <div class="fb-label">Block 2</div>
-    <div class="fb-title">Customer app — what changes from the current app.loandoctor.in</div>
-
-    <div class="note amber-note" style="margin-bottom: 20px;"><strong>Current app baseline:</strong> The existing app at app.loandoctor.in has an onboarding form, scheme pages, and a basic order flow. We are replacing the onboarding with Voice AI and upgrading the full journey — from scheme discovery through payment, tracking, and in-app communication.</div>
-
-    <div class="flow-row">
-      <div class="node hi">
-        <div class="nbadge b-ai">Voice AI</div>
-        <h5>Opens app, logs in</h5>
-        <p>OTP login via phone number. First open: selects language — Hindi / Kannada / English</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <div class="nbadge b-ai">Voice AI</div>
-        <h5>AI asks questions</h5>
-        <p>Business type, income, location, age, category. Customer answers by voice or text. Each answer is stored in real-time — no re-asking.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <div class="nbadge b-ai">Automated</div>
-        <h5>Scheme matched</h5>
-        <p>System recommends the best scheme based on profile. Shows loan amount, subsidy %, and own contribution. Customer can also browse all schemes.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Documents uploaded</h5>
-        <p>Scheme-specific checklist. Each document is checked on upload. Bad image or wrong format is flagged immediately with a reason before the team sees it.</p>
-      </div>
-    </div>
-
-    <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none"><path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-    <!-- CRITICAL BRANCH — drop-off to sales -->
-    <div class="branch-row">
-      <div class="branch sale">
-        <div class="nbadge b-sales">Goes to Sales Agent</div>
-        <h5>Customer drops off or doesn't pay</h5>
-        <p>If the customer leaves the app after AI onboarding without paying, or doesn't engage with the AI at all — the lead is automatically sent to the sales agent queue in NeoDove with the data collected so far.</p>
-        <ul>
-          <li>Agent sees the partial profile the AI collected</li>
-          <li>Agent calls via NeoDove and continues from where AI left off</li>
-          <li>Agent can also send a QR link to pay the ₹1,999 directly</li>
-          <li>If customer pays after agent's call — case is created same as normal</li>
-        </ul>
-      </div>
-      <div class="branch yes">
-        <div class="nbadge b-pay">Payment Gate</div>
-        <h5>Customer pays ₹1,999 token</h5>
-        <p>UPI / Card / Net Banking / Wallets. Partial payment also supported. Application does not move forward until payment is confirmed by the payment gateway.</p>
-        <ul>
-          <li>Invoice PDF auto-generated and sent on payment</li>
-          <li>Case created in CRM — stage set to "New Application"</li>
-          <li>Admin portal notified immediately</li>
-          <li>Push notification sent to customer with their case ID</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none"><path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-    <div class="flow-row">
-      <div class="node">
-        <h5>Application tracker</h5>
-        <p>Customer sees their current stage. Push notification on every stage change. Can see full history of what has happened.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <h5>In-app chat with loan supervisor</h5>
-        <p>Direct messaging inside the app. Replaces WhatsApp for case communication. Customer can also see and download their invoice here.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Support ticket</h5>
-        <p>If something is stuck, customer raises a ticket from the app. Logged in the admin portal.</p>
-      </div>
-    </div>
-
-    <div class="note"><strong>Everything in the app:</strong> Browse schemes · Browse content · View and edit profile · Voice AI onboarding · Upload documents · Pay ₹1,999 (full or partial) · Download invoice · Track application · Chat with loan supervisor · Raise a support ticket</div>
-  </div>
-
-  <div class="drule"></div>
-
-
-  <!-- ── BLOCK 3: SALES AGENT LOOP ── -->
-  <div class="fb">
-    <div class="fb-label">Block 3</div>
-    <div class="fb-title">Sales agent — the loop that never disappears</div>
-
-    <div class="note amber-note" style="margin-bottom: 20px;"><strong>Important:</strong> The AI handles the first touch when a customer comes in through the app. But not every customer will go through the AI or pay immediately. The sales agent is still fully in the loop — they get leads from the app, follow up via NeoDove, and can close the sale manually.</div>
-
-    <div class="sub-h">Where sales agents get leads</div>
-
-    <div class="branch-row">
-      <div class="branch sale">
-        <h5>From the app — AI drop-offs</h5>
-        <p>Customer opened the app, AI collected some or all profile data, but they didn't pay. This lead arrives in the agent's queue with everything the AI collected.</p>
-      </div>
-      <div class="branch sale">
-        <h5>From the app — didn't engage with AI</h5>
-        <p>Customer installed and opened the app but didn't speak to the AI at all. Arrives as a basic lead with just name and phone number. Agent calls to qualify.</p>
-      </div>
-      <div class="branch sale">
-        <h5>Direct / walk-in leads</h5>
-        <p>Leads that come in through any other channel — WhatsApp inquiries, website, referrals. Agent creates the lead manually in the sales portal.</p>
-      </div>
-    </div>
-
-    <div class="sub-h">What the sales agent can do with each lead</div>
-
-    <div class="flow-row">
-      <div class="node amber">
-        <div class="nbadge b-nd">NeoDove</div>
-        <h5>Calls the lead</h5>
-        <p>Via NeoDove dialer. Call auto-attaches to the lead record after the call ends.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node amber">
-        <h5>Adds notes to the lead</h5>
-        <p>What was discussed, objections, follow-up date. All stored against the lead in the sales portal.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node amber">
-        <h5>Sends payment QR / link</h5>
-        <p>Agent sends the customer a direct link to pay ₹1,999. Same payment flow as the in-app payment.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <div class="nbadge b-ai">Automated</div>
-        <h5>Customer pays → case created</h5>
-        <p>Same outcome as the app flow. Case lands in the admin portal, agent gets commission credit.</p>
-      </div>
-    </div>
-
-    <div class="sub-h">Sales agent dashboard — what they see</div>
-
-    <div class="branch-row">
-      <div class="branch">
-        <h5>Lead pool</h5>
-        <p>All leads assigned to them. Filtered by status — new / contacted / follow-up / closed / lost.</p>
-      </div>
-      <div class="branch">
-        <h5>Lead detail</h5>
-        <p>Customer profile, AI-collected data, document upload status, full call history from NeoDove, all notes added by this agent.</p>
-      </div>
-      <div class="branch">
-        <h5>Commission tracker</h5>
-        <p>Current month earnings, pending approval, historical payouts. Broken down per scheme and per order.</p>
-      </div>
-      <div class="branch">
-        <h5>Performance numbers</h5>
-        <p>How many leads contacted, how many converted, conversion rate, monthly target vs actual. Visible to the agent and to the Administrator.</p>
-      </div>
-    </div>
-
-    <div class="note"><strong>Commission flow:</strong> When a customer pays ₹1,999 and the agent is credited — commission is calculated automatically (percentage or fixed, set per scheme by admin). It goes into "pending" state. Finance team reviews and approves from the admin panel. After approval, it shows as "confirmed" in the agent's dashboard.</div>
-  </div>
-
-  <div class="drule"></div>
-
-
-  <!-- ── BLOCK 4: ADMIN PORTAL ── -->
-  <div class="fb">
-    <div class="fb-label">Block 4</div>
-    <div class="fb-title">Admin portal — two roles, one portal</div>
-
-    <!-- ROLES -->
-    <div class="roles">
-      <div class="rc">
-        <h4>Administrator</h4>
-        <div class="rdesc">Full access. Matches "Portal Owner" and "Admin" in the current Zoho setup.</div>
-        <ul>
-          <li>See all applications across all stages</li>
-          <li>Assign applications to loan supervisors (Managers)</li>
-          <li>See all sales leads and assign to agents</li>
-          <li>Add / remove users, set roles</li>
-          <li>View and approve commission payouts</li>
-          <li>Revenue and payment reconciliation view</li>
-          <li>Pipeline health across all stages</li>
-          <li>Sales team performance stats</li>
-          <li>Move applications between stages from any case</li>
-        </ul>
-      </div>
-      <div class="rc">
-        <h4>Manager</h4>
-        <div class="rdesc">Sees only their assigned cases and leads. Matches "Manager" role in the current Zoho setup — covers loan supervisors and sales agents.</div>
-        <ul>
-          <li>View and work on their assigned applications</li>
-          <li>Move applications through stages they own</li>
-          <li>Review, approve, or reject documents (with a note)</li>
-          <li>Upload documents from the admin side</li>
-          <li>Chat with the customer in-app</li>
-          <li>See NeoDove call history for their cases</li>
-          <li>View their own commission dashboard</li>
-          <li>See leads assigned to them and add notes</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- OPS FLOW -->
-    <div class="sub-h">Ops flow — from payment to delivery</div>
-
-    <div class="flow-row">
-      <div class="node hi">
-        <div class="nbadge b-ai">Auto trigger</div>
-        <h5>Payment confirmed</h5>
-        <p>Case appears in the portal at "New Application." Administrator sees it immediately.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Admin assigns to loan supervisor</h5>
-        <p>Administrator picks a Manager and assigns. That Manager sees the case in their queue.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Supervisor opens the case</h5>
-        <p>Sees full customer profile, AI-collected data, uploaded docs, NeoDove call history, and activity timeline</p>
-      </div>
-    </div>
-
-    <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none"><path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-    <div class="branch-row">
-      <div class="branch">
-        <h5>Works the checklist</h5>
-        <p>Each stage has a configurable checklist of steps. Supervisor ticks them off as they complete each one. Checklist is set per scheme by the Administrator.</p>
-      </div>
-      <div class="branch">
-        <h5>Chats with customer in-app</h5>
-        <p>Replaces WhatsApp for case communication. Full conversation visible in the case timeline.</p>
-      </div>
-      <div class="branch">
-        <h5>Requests or reviews documents</h5>
-        <p>Can request a specific document (customer uploads in app) or upload directly from admin side. Approve or reject each doc with a note.</p>
-      </div>
-      <div class="branch yes">
-        <h5>Moves case to next stage</h5>
-        <p>When all checklist steps are done, supervisor moves to the next stage. Customer gets a push notification. Activity log records the move with timestamp and agent name.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="drule"></div>
-
-
-  <!-- ── BLOCK 5: PIPELINE ── -->
-  <div class="fb">
-    <div class="fb-label">Block 5</div>
-    <div class="fb-title">Ops pipeline — six stages</div>
-
-    <div class="pipe">
-      <div class="pipe-head">Every paid application moves through these stages in order</div>
-      <div class="pipe-cols">
-        <div class="pc">
-          <div class="pc-n">01</div>
-          <div class="pc-name">New Application</div>
-          <div class="pc-team">Entry: payment confirmed. Admin assigns to supervisor.</div>
-        </div>
-        <div class="pc">
-          <div class="pc-n">02</div>
-          <div class="pc-name">Eligibility Check</div>
-          <div class="pc-team">Screening team. Verify scheme match manually.</div>
-        </div>
-        <div class="pc">
-          <div class="pc-n">03</div>
-          <div class="pc-name">Documents Pending</div>
-          <div class="pc-team">Documentation team. Review, approve or reject each doc.</div>
-        </div>
-        <div class="pc">
-          <div class="pc-n">04</div>
-          <div class="pc-name">Project Report</div>
-          <div class="pc-team">Project report team. DPR prepared and uploaded.</div>
-        </div>
-        <div class="pc">
-          <div class="pc-n">05</div>
-          <div class="pc-name">Delivery Ready</div>
-          <div class="pc-team">Delivery team. Submit to bank portal, send docs to customer.</div>
-        </div>
-        <div class="pc hold">
-          <div class="pc-n">—</div>
-          <div class="pc-name">On Hold</div>
-          <div class="pc-team">Any stage, any team. Bank query, missing doc, unresponsive customer.</div>
+          <div class="ci">
+            <svg class="ci-icon" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#2d6a4f" stroke-width="1.3" fill="#f0faf4" />
+              <path d="M9 15l4 4 8-8" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div>
+              <strong>Customer tracks their application themselves</strong>
+              <p>Every stage update shows in the app with a push notification. They chat with their loan supervisor
+                in-app and upload documents without calling anyone.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="note">
-      <strong>On Hold:</strong> Any case can be moved to Hold from any stage by either role. When the issue is resolved, the case goes back to the stage it came from — not to the beginning. Customer sees the reason for the hold in their app.
-      <br><br>
-      <strong>Checklist per stage:</strong> Each stage has a configurable checklist. The Administrator sets the steps for each scheme (e.g. PMEGP has different steps to Mudra). Supervisors work through the checklist and the system tracks which steps are done.
+    <div class="rule"></div>
+
+    <!-- SCOPE -->
+    <div class="wrap" style="padding-top: 72px; padding-bottom: 72px;">
+      <div class="sec-label">Scope</div>
+      <h2>What we're building</h2>
+      <p class="sec-desc">Five systems. Nothing else is in scope for this engagement.</p>
+
+      <div class="scope-grid">
+        <div class="sc">
+          <div class="sc-tag tag-n">New</div>
+          <h4>Customer Mobile App</h4>
+          <p>iOS and Android. The customer's entire journey — from first open to application delivered.</p>
+          <ul>
+            <li>OTP login, language selection (Hindi / Kannada / English)</li>
+            <li>Voice AI onboarding — collects business profile through conversation</li>
+            <li>Scheme recommendation based on profile</li>
+            <li>Scheme browsing and content pages</li>
+            <li>Document upload with per-file quality check</li>
+            <li>₹1,999 token payment — UPI, card, net banking, wallets</li>
+            <li>Invoice generation and download (PDF)</li>
+            <li>Live application tracker — stage-by-stage</li>
+            <li>In-app chat with loan supervisor</li>
+            <li>Push notifications on every stage change</li>
+            <li>Support ticket flow</li>
+          </ul>
+        </div>
+
+        <div class="sc">
+          <div class="sc-tag tag-n">New</div>
+          <h4>Sales Engine</h4>
+          <p>For sales agents — managing leads, tracking conversions, and monitoring commissions.</p>
+          <ul>
+            <li>Sales agent portal — view assigned and unassigned leads</li>
+            <li>Lead status tracking — unpaid / partially paid / fully paid</li>
+            <li>Leads from the app that didn't convert or dropped off AI flow</li>
+            <li>Lead notes and engagement history per lead</li>
+            <li>Commission dashboard — current month, pending, historical</li>
+            <li>Commission calculation per scheme (percentage or fixed)</li>
+            <li>Finance team approval flow for commission payouts</li>
+            <li>Sales performance dashboard — active leads, conversion rate, target vs actual</li>
+          </ul>
+        </div>
+
+        <div class="sc">
+          <div class="sc-tag tag-n">New</div>
+          <h4>Operations Backend (CRM + Checklist)</h4>
+          <p>For loan supervisors — working applications from payment to delivery.</p>
+          <ul>
+            <li>Full application pipeline — kanban view across all stages</li>
+            <li>Configurable checklist per loan scheme (steps can be added, changed)</li>
+            <li>Document review — approve or reject each document with a note</li>
+            <li>Chat with customer in-app</li>
+            <li>Upload documents from admin side</li>
+            <li>NeoDove call log attached to each case automatically</li>
+            <li>Activity timeline per application — every action, every change, every call</li>
+            <li>Stage-wise analytics and progress tracking</li>
+          </ul>
+        </div>
+
+        <div class="sc">
+          <div class="sc-tag tag-n">New</div>
+          <h4>Admin Dashboard</h4>
+          <p>For the Administrator — full visibility across sales, ops, and commissions.</p>
+          <ul>
+            <li>All applications across all stages in one view</li>
+            <li>Assign applications to loan supervisors</li>
+            <li>Add/remove users and manage roles (Administrator / Manager)</li>
+            <li>Revenue tracking — payments collected, scheme-wise breakdown</li>
+            <li>Sales team performance — leads, conversions, commission approvals</li>
+            <li>Pipeline health — how many cases at each stage, how long they've been there</li>
+            <li>Payment reconciliation</li>
+          </ul>
+        </div>
+
+        <div class="sc" style="grid-column: 1 / -1;">
+          <div class="sc-tag tag-e">Connecting existing</div>
+          <h4>NeoDove Integration</h4>
+          <p>NeoDove stays as the calling tool for sales agents and loan supervisors. We connect it so every call
+            automatically attaches to the right case in the portal — no manual logging. NeoDove also receives leads that
+            dropped off in the app so agents can follow up. Commission tracking from NeoDove's existing data will feed
+            into the sales dashboard.</p>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="drule"></div>
+    <div class="rule"></div>
 
+    <!-- TIMELINE -->
+    <div class="wrap" style="padding-top: 72px; padding-bottom: 88px;">
+      <div class="sec-label">Timeline</div>
+      <h2>2 to 3 weeks</h2>
+      <p class="sec-desc">The current LoanDoctor app at <strong style="color:var(--forest)">app.loandoctor.in</strong>
+        is the starting point. We are not starting from zero — we're replacing and upgrading what's there. Each week
+        adds a working layer on top of that base.</p>
 
-  <!-- ── BLOCK 6: NEODOVE ── -->
-  <div class="fb">
-    <div class="fb-label">Block 6</div>
-    <div class="fb-title">NeoDove — how it connects to the platform</div>
-
-    <div class="flow-row">
-      <div class="node">
-        <div class="nbadge b-nd">NeoDove</div>
-        <h5>Agent makes a call</h5>
-        <p>Sales agent or loan supervisor dials the customer via NeoDove — before or after payment</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <div class="nbadge b-ai">Webhook</div>
-        <h5>Call ends → NeoDove fires a webhook</h5>
-        <p>Payload: agent name, customer phone, duration, notes if added, timestamp</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node hi">
-        <h5>Call matched to the case or lead</h5>
-        <p>System matches phone number to an application or lead record. Call is written to that record's activity timeline.</p>
-      </div>
-      <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="node">
-        <h5>Supervisor or agent sees full history</h5>
-        <p>Every call ever made to this person shows in their record — agent name, duration, notes — before the next call is made</p>
+      <div class="tl-grid">
+        <div class="tl-col">
+          <div class="tl-wk">Week 01</div>
+          <div class="tl-title">App + Voice AI</div>
+          <div class="tl-sub">Starting from: current app.loandoctor.in onboarding</div>
+          <div class="tl-li">Replace current onboarding with Voice AI conversation flow</div>
+          <div class="tl-li">Language selection — Hindi, Kannada, English</div>
+          <div class="tl-li">Scheme eligibility matching for all 6 schemes</div>
+          <div class="tl-li">Document upload screen with per-file quality check</div>
+          <div class="tl-li">Scheme browsing and content pages</div>
+          <div class="tl-li">Lead capture — if customer drops off, lead is queued for sales agent</div>
+          <div class="tl-out">Customer can open the app, talk to AI in Hindi or Kannada, get a scheme recommendation,
+            and upload documents. Dropped leads are visible to sales agents.</div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-wk">Week 02</div>
+          <div class="tl-title">Payment + Admin portal</div>
+          <div class="tl-sub">Starting from: existing Zoho Projects stage structure</div>
+          <div class="tl-li">₹1,999 token payment — UPI, card, net banking, wallets</div>
+          <div class="tl-li">Invoice PDF generated and sent on payment</div>
+          <div class="tl-li">Case auto-created in CRM on payment success</div>
+          <div class="tl-li">Application tracker in the customer app</div>
+          <div class="tl-li">Admin portal — pipeline kanban, application detail, document review</div>
+          <div class="tl-li">Administrator and Manager roles — correct access for each</div>
+          <div class="tl-li">Sales agent portal — lead pool, lead status, notes</div>
+          <div class="tl-out">Payment goes through, case lands in the portal, team can move it through stages. Sales
+            agents can see and work dropped leads.</div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-wk">Week 03</div>
+          <div class="tl-title">Integrations</div>
+          <div class="tl-sub">Starting from: NeoDove webhook setup + existing commission structure</div>
+          <div class="tl-li">NeoDove webhook — call logs auto-attach to cases</div>
+          <div class="tl-li">Push notifications on every stage change</div>
+          <div class="tl-li">WhatsApp notifications for key events (payment, stage change)</div>
+          <div class="tl-li">In-app chat between customer and loan supervisor</div>
+          <div class="tl-li">Commission tracking dashboard for sales agents and finance</div>
+          <div class="tl-li">Commission approval flow for admin</div>
+          <div class="tl-li">QA, bug fixes, App Store + Play Store submission</div>
+          <div class="tl-out">Full system live. Customer handles the first half in the app. Sales agent handles
+            drop-offs. Ops team works from the portal. Commissions tracked automatically.</div>
+        </div>
       </div>
     </div>
 
-    <div class="note">
-      <strong>Two places NeoDove connects:</strong><br>
-      1. <strong>Ops pipeline</strong> — call logs attach to the customer's case. Loan supervisor sees full call history per case.<br>
-      2. <strong>Sales portal</strong> — call logs attach to the lead. Sales agent sees call history per lead. Commission data from NeoDove feeds into the commission dashboard.
-    </div>
-  </div>
-
-</div><!-- /dev-inner -->
-</div><!-- /dev-wrap -->
+  </div><!-- end #proposal -->
 
 
-<!-- FOOTER -->
-<footer>
-  <span class="fl">1000xDev × LoanDoctor · Honeyland Fintech Pvt. Ltd.</span>
-  <span class="fr-t">Internal · Do not share externally</span>
-</footer>
+  <!-- ═══════════════════════════ DEV FLOW ═══════════════════════════ -->
+  <div class="dev-wrap" id="dev">
+    <div class="dev-inner">
 
-<script>
-const devEl = document.getElementById('dev');
-const tProposal = document.getElementById('t-proposal');
-const tDev = document.getElementById('t-dev');
-window.addEventListener('scroll', function(){
-  if(devEl.getBoundingClientRect().top <= 60){
-    tProposal.classList.remove('on');
-    tDev.classList.add('on');
-  } else {
-    tDev.classList.remove('on');
-    tProposal.classList.add('on');
-  }
-}, {passive: true});
-</script>
+      <div class="dev-intro">
+        <div class="sec-label" style="color: var(--leaf);">Developer Flow</div>
+        <h2 class="dh2">What we understood from the client — and how we're building it</h2>
+        <p class="dd">For the dev team. No UI specs, no stack decisions — just flows. Read all five blocks before
+          starting. These flows describe the current client setup, the customer app, the sales agent loop, the admin
+          portal, and the NeoDove connection.</p>
+      </div>
+
+
+      <!-- ── BLOCK 1: CURRENT SETUP ── -->
+      <div class="fb">
+        <div class="fb-label">Block 1</div>
+        <div class="fb-title">How LoanDoctor works today</div>
+
+        <div class="flow-row">
+          <div class="node">
+            <div class="nbadge b-nd">NeoDove</div>
+            <h5>Telecaller dials customer</h5>
+            <p>Sales Agent 1, 2...n calls via NeoDove dialer</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Collects business details over call</h5>
+            <p>Business type, turnover, location, category, extra info</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Recommends a scheme</h5>
+            <p>PMEGP, MSME, Mudra, NLM, Stand-Up India, Education Loan</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Sells via QR code</h5>
+            <p>Customer scans to pay. Status logged in NeoDove CRM — unpaid / partially paid / fully paid</p>
+          </div>
+        </div>
+
+        <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none">
+            <path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <div class="branch-row">
+          <div class="branch no">
+            <h5>Not converted → lead stays in NeoDove</h5>
+            <p>Customer didn't pay. Lead stays in NeoDove. Agent follows up manually. No automated next step.</p>
+          </div>
+          <div class="branch yes">
+            <h5>Converted → Zoho form filled by agent</h5>
+            <p>Agent fills a Zoho form. Response goes into Zoho Projects. Ops manager receives it and manually assigns
+              to a loan supervisor.</p>
+          </div>
+        </div>
+
+        <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none">
+            <path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <div class="flow-row">
+          <div class="node">
+            <h5>Loan supervisor takes over</h5>
+            <p>Via WhatsApp or call</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Document collection over WhatsApp</h5>
+            <p>Aadhaar, PAN, caste cert, bank passbook, invoice docs — sent over WhatsApp, stored as files in Zoho
+              Projects</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Project report prepared</h5>
+            <p>LoanDoctor creates the DPR. Priced by loan size — ₹3,999 to ₹11,999+. Stored in Zoho Projects.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <h5>Loan applied + docs sent</h5>
+            <p>Documents sent to customer and submitted to bank or govt portal</p>
+          </div>
+        </div>
+
+        <div class="note"><strong>What we're replacing:</strong> NeoDove + WhatsApp + Zoho Forms + Zoho Projects — four
+          disconnected tools with no shared view. The platform we're building is a single system that does all of this.
+        </div>
+      </div>
+
+      <div class="drule"></div>
+
+
+      <!-- ── BLOCK 2: CUSTOMER APP ── -->
+      <div class="fb">
+        <div class="fb-label">Block 2</div>
+        <div class="fb-title">Customer app — what changes from the current app.loandoctor.in</div>
+
+        <div class="note amber-note" style="margin-bottom: 20px;"><strong>Current app baseline:</strong> The existing
+          app at app.loandoctor.in has an onboarding form, scheme pages, and a basic order flow. We are replacing the
+          onboarding with Voice AI and upgrading the full journey — from scheme discovery through payment, tracking, and
+          in-app communication.</div>
+
+        <div class="flow-row">
+          <div class="node hi">
+            <div class="nbadge b-ai">Voice AI</div>
+            <h5>Opens app, logs in</h5>
+            <p>OTP login via phone number. First open: selects language — Hindi / Kannada / English</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <div class="nbadge b-ai">Voice AI</div>
+            <h5>AI asks questions</h5>
+            <p>Business type, income, location, age, category. Customer answers by voice or text. Each answer is stored
+              in real-time — no re-asking.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <div class="nbadge b-ai">Automated</div>
+            <h5>Scheme matched</h5>
+            <p>System recommends the best scheme based on profile. Shows loan amount, subsidy %, and own contribution.
+              Customer can also browse all schemes.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Documents uploaded</h5>
+            <p>Scheme-specific checklist. Each document is checked on upload. Bad image or wrong format is flagged
+              immediately with a reason before the team sees it.</p>
+          </div>
+        </div>
+
+        <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none">
+            <path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <!-- CRITICAL BRANCH — drop-off to sales -->
+        <div class="branch-row">
+          <div class="branch sale">
+            <div class="nbadge b-sales">Goes to Sales Agent</div>
+            <h5>Customer drops off or doesn't pay</h5>
+            <p>If the customer leaves the app after AI onboarding without paying, or doesn't engage with the AI at all —
+              the lead is automatically sent to the sales agent queue in NeoDove with the data collected so far.</p>
+            <ul>
+              <li>Agent sees the partial profile the AI collected</li>
+              <li>Agent calls via NeoDove and continues from where AI left off</li>
+              <li>Agent can also send a QR link to pay the ₹1,999 directly</li>
+              <li>If customer pays after agent's call — case is created same as normal</li>
+            </ul>
+          </div>
+          <div class="branch yes">
+            <div class="nbadge b-pay">Payment Gate</div>
+            <h5>Customer pays ₹1,999 token</h5>
+            <p>UPI / Card / Net Banking / Wallets. Partial payment also supported. Application does not move forward
+              until payment is confirmed by the payment gateway.</p>
+            <ul>
+              <li>Invoice PDF auto-generated and sent on payment</li>
+              <li>Case created in CRM — stage set to "New Application"</li>
+              <li>Admin portal notified immediately</li>
+              <li>Push notification sent to customer with their case ID</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none">
+            <path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <div class="flow-row">
+          <div class="node">
+            <h5>Application tracker</h5>
+            <p>Customer sees their current stage. Push notification on every stage change. Can see full history of what
+              has happened.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <h5>In-app chat with loan supervisor</h5>
+            <p>Direct messaging inside the app. Replaces WhatsApp for case communication. Customer can also see and
+              download their invoice here.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Support ticket</h5>
+            <p>If something is stuck, customer raises a ticket from the app. Logged in the admin portal.</p>
+          </div>
+        </div>
+
+        <div class="note"><strong>Everything in the app:</strong> Browse schemes · Browse content · View and edit
+          profile · Voice AI onboarding · Upload documents · Pay ₹1,999 (full or partial) · Download invoice · Track
+          application · Chat with loan supervisor · Raise a support ticket</div>
+      </div>
+
+      <div class="drule"></div>
+
+
+      <!-- ── BLOCK 3: SALES AGENT LOOP ── -->
+      <div class="fb">
+        <div class="fb-label">Block 3</div>
+        <div class="fb-title">Sales agent — the loop that never disappears</div>
+
+        <div class="note amber-note" style="margin-bottom: 20px;"><strong>Important:</strong> The AI handles the first
+          touch when a customer comes in through the app. But not every customer will go through the AI or pay
+          immediately. The sales agent is still fully in the loop — they get leads from the app, follow up via NeoDove,
+          and can close the sale manually.</div>
+
+        <div class="sub-h">Where sales agents get leads</div>
+
+        <div class="branch-row">
+          <div class="branch sale">
+            <h5>From the app — AI drop-offs</h5>
+            <p>Customer opened the app, AI collected some or all profile data, but they didn't pay. This lead arrives in
+              the agent's queue with everything the AI collected.</p>
+          </div>
+          <div class="branch sale">
+            <h5>From the app — didn't engage with AI</h5>
+            <p>Customer installed and opened the app but didn't speak to the AI at all. Arrives as a basic lead with
+              just name and phone number. Agent calls to qualify.</p>
+          </div>
+          <div class="branch sale">
+            <h5>Direct / walk-in leads</h5>
+            <p>Leads that come in through any other channel — WhatsApp inquiries, website, referrals. Agent creates the
+              lead manually in the sales portal.</p>
+          </div>
+        </div>
+
+        <div class="sub-h">What the sales agent can do with each lead</div>
+
+        <div class="flow-row">
+          <div class="node amber">
+            <div class="nbadge b-nd">NeoDove</div>
+            <h5>Calls the lead</h5>
+            <p>Via NeoDove dialer. Call auto-attaches to the lead record after the call ends.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node amber">
+            <h5>Adds notes to the lead</h5>
+            <p>What was discussed, objections, follow-up date. All stored against the lead in the sales portal.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node amber">
+            <h5>Sends payment QR / link</h5>
+            <p>Agent sends the customer a direct link to pay ₹1,999. Same payment flow as the in-app payment.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <div class="nbadge b-ai">Automated</div>
+            <h5>Customer pays → case created</h5>
+            <p>Same outcome as the app flow. Case lands in the admin portal, agent gets commission credit.</p>
+          </div>
+        </div>
+
+        <div class="sub-h">Sales agent dashboard — what they see</div>
+
+        <div class="branch-row">
+          <div class="branch">
+            <h5>Lead pool</h5>
+            <p>All leads assigned to them. Filtered by status — new / contacted / follow-up / closed / lost.</p>
+          </div>
+          <div class="branch">
+            <h5>Lead detail</h5>
+            <p>Customer profile, AI-collected data, document upload status, full call history from NeoDove, all notes
+              added by this agent.</p>
+          </div>
+          <div class="branch">
+            <h5>Commission tracker</h5>
+            <p>Current month earnings, pending approval, historical payouts. Broken down per scheme and per order.</p>
+          </div>
+          <div class="branch">
+            <h5>Performance numbers</h5>
+            <p>How many leads contacted, how many converted, conversion rate, monthly target vs actual. Visible to the
+              agent and to the Administrator.</p>
+          </div>
+        </div>
+
+        <div class="note"><strong>Commission flow:</strong> When a customer pays ₹1,999 and the agent is credited —
+          commission is calculated automatically (percentage or fixed, set per scheme by admin). It goes into "pending"
+          state. Finance team reviews and approves from the admin panel. After approval, it shows as "confirmed" in the
+          agent's dashboard.</div>
+      </div>
+
+      <div class="drule"></div>
+
+
+      <!-- ── BLOCK 4: ADMIN PORTAL ── -->
+      <div class="fb">
+        <div class="fb-label">Block 4</div>
+        <div class="fb-title">Admin portal — two roles, one portal</div>
+
+        <!-- ROLES -->
+        <div class="roles">
+          <div class="rc">
+            <h4>Administrator</h4>
+            <div class="rdesc">Full access. Matches "Portal Owner" and "Admin" in the current Zoho setup.</div>
+            <ul>
+              <li>See all applications across all stages</li>
+              <li>Assign applications to loan supervisors (Managers)</li>
+              <li>See all sales leads and assign to agents</li>
+              <li>Add / remove users, set roles</li>
+              <li>View and approve commission payouts</li>
+              <li>Revenue and payment reconciliation view</li>
+              <li>Pipeline health across all stages</li>
+              <li>Sales team performance stats</li>
+              <li>Move applications between stages from any case</li>
+            </ul>
+          </div>
+          <div class="rc">
+            <h4>Manager</h4>
+            <div class="rdesc">Sees only their assigned cases and leads. Matches "Manager" role in the current Zoho
+              setup — covers loan supervisors and sales agents.</div>
+            <ul>
+              <li>View and work on their assigned applications</li>
+              <li>Move applications through stages they own</li>
+              <li>Review, approve, or reject documents (with a note)</li>
+              <li>Upload documents from the admin side</li>
+              <li>Chat with the customer in-app</li>
+              <li>See NeoDove call history for their cases</li>
+              <li>View their own commission dashboard</li>
+              <li>See leads assigned to them and add notes</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- OPS FLOW -->
+        <div class="sub-h">Ops flow — from payment to delivery</div>
+
+        <div class="flow-row">
+          <div class="node hi">
+            <div class="nbadge b-ai">Auto trigger</div>
+            <h5>Payment confirmed</h5>
+            <p>Case appears in the portal at "New Application." Administrator sees it immediately.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Admin assigns to loan supervisor</h5>
+            <p>Administrator picks a Manager and assigns. That Manager sees the case in their queue.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Supervisor opens the case</h5>
+            <p>Sees full customer profile, AI-collected data, uploaded docs, NeoDove call history, and activity timeline
+            </p>
+          </div>
+        </div>
+
+        <div class="down"><svg width="12" height="26" viewBox="0 0 12 26" fill="none">
+            <path d="M6 0v22M1 16l5 8 5-8" stroke="rgba(255,255,255,0.2)" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <div class="branch-row">
+          <div class="branch">
+            <h5>Works the checklist</h5>
+            <p>Each stage has a configurable checklist of steps. Supervisor ticks them off as they complete each one.
+              Checklist is set per scheme by the Administrator.</p>
+          </div>
+          <div class="branch">
+            <h5>Chats with customer in-app</h5>
+            <p>Replaces WhatsApp for case communication. Full conversation visible in the case timeline.</p>
+          </div>
+          <div class="branch">
+            <h5>Requests or reviews documents</h5>
+            <p>Can request a specific document (customer uploads in app) or upload directly from admin side. Approve or
+              reject each doc with a note.</p>
+          </div>
+          <div class="branch yes">
+            <h5>Moves case to next stage</h5>
+            <p>When all checklist steps are done, supervisor moves to the next stage. Customer gets a push notification.
+              Activity log records the move with timestamp and agent name.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="drule"></div>
+
+
+      <!-- ── BLOCK 5: PIPELINE ── -->
+      <div class="fb">
+        <div class="fb-label">Block 5</div>
+        <div class="fb-title">Ops pipeline — six stages</div>
+
+        <div class="pipe">
+          <div class="pipe-head">Every paid application moves through these stages in order</div>
+          <div class="pipe-cols">
+            <div class="pc">
+              <div class="pc-n">01</div>
+              <div class="pc-name">New Application</div>
+              <div class="pc-team">Entry: payment confirmed. Admin assigns to supervisor.</div>
+            </div>
+            <div class="pc">
+              <div class="pc-n">02</div>
+              <div class="pc-name">Eligibility Check</div>
+              <div class="pc-team">Screening team. Verify scheme match manually.</div>
+            </div>
+            <div class="pc">
+              <div class="pc-n">03</div>
+              <div class="pc-name">Documents Pending</div>
+              <div class="pc-team">Documentation team. Review, approve or reject each doc.</div>
+            </div>
+            <div class="pc">
+              <div class="pc-n">04</div>
+              <div class="pc-name">Project Report</div>
+              <div class="pc-team">Project report team. DPR prepared and uploaded.</div>
+            </div>
+            <div class="pc">
+              <div class="pc-n">05</div>
+              <div class="pc-name">Delivery Ready</div>
+              <div class="pc-team">Delivery team. Submit to bank portal, send docs to customer.</div>
+            </div>
+            <div class="pc hold">
+              <div class="pc-n">—</div>
+              <div class="pc-name">On Hold</div>
+              <div class="pc-team">Any stage, any team. Bank query, missing doc, unresponsive customer.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>On Hold:</strong> Any case can be moved to Hold from any stage by either role. When the issue is
+          resolved, the case goes back to the stage it came from — not to the beginning. Customer sees the reason for
+          the hold in their app.
+          <br><br>
+          <strong>Checklist per stage:</strong> Each stage has a configurable checklist. The Administrator sets the
+          steps for each scheme (e.g. PMEGP has different steps to Mudra). Supervisors work through the checklist and
+          the system tracks which steps are done.
+        </div>
+      </div>
+
+      <div class="drule"></div>
+
+
+      <!-- ── BLOCK 6: NEODOVE ── -->
+      <div class="fb">
+        <div class="fb-label">Block 6</div>
+        <div class="fb-title">NeoDove — how it connects to the platform</div>
+
+        <div class="flow-row">
+          <div class="node">
+            <div class="nbadge b-nd">NeoDove</div>
+            <h5>Agent makes a call</h5>
+            <p>Sales agent or loan supervisor dials the customer via NeoDove — before or after payment</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <div class="nbadge b-ai">Webhook</div>
+            <h5>Call ends → NeoDove fires a webhook</h5>
+            <p>Payload: agent name, customer phone, duration, notes if added, timestamp</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node hi">
+            <h5>Call matched to the case or lead</h5>
+            <p>System matches phone number to an application or lead record. Call is written to that record's activity
+              timeline.</p>
+          </div>
+          <div class="arr"><svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="rgba(255,255,255,0.25)" stroke-width="1.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="node">
+            <h5>Supervisor or agent sees full history</h5>
+            <p>Every call ever made to this person shows in their record — agent name, duration, notes — before the next
+              call is made</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Two places NeoDove connects:</strong><br>
+          1. <strong>Ops pipeline</strong> — call logs attach to the customer's case. Loan supervisor sees full call
+          history per case.<br>
+          2. <strong>Sales portal</strong> — call logs attach to the lead. Sales agent sees call history per lead.
+          Commission data from NeoDove feeds into the commission dashboard.
+        </div>
+      </div>
+
+    </div><!-- /dev-inner -->
+  </div><!-- /dev-wrap -->
+
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="fl">1000xDev × LoanDoctor · Honeyland Fintech Pvt. Ltd.</span>
+    <span class="fr-t">Internal · Do not share externally</span>
+  </footer>
+
+  <script>
+    const devEl = document.getElementById('dev');
+    const tProposal = document.getElementById('t-proposal');
+    const tDev = document.getElementById('t-dev');
+    window.addEventListener('scroll', function () {
+      if (devEl.getBoundingClientRect().top <= 60) {
+        tProposal.classList.remove('on');
+        tDev.classList.add('on');
+      } else {
+        tDev.classList.remove('on');
+        tProposal.classList.add('on');
+      }
+    }, { passive: true });
+  </script>
 </body>
+
 </html>
